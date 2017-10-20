@@ -1,6 +1,6 @@
 # How to Contribute
 
-Thank you for wanting to contribute to MsgCodec! 
+Thank you for wanting to contribute to Ciguan! 
 Here are a few important things you should know about contributing:
 
  * Large changes, such as API changes, require discussion. Please create 
@@ -8,5 +8,5 @@ Here are a few important things you should know about contributing:
  * Pull requests are great for small fixes for bugs, documentation, etc.
  * Code contributions require signing the [Cinnober CLA][].
  
- [issue]: https://github.com/cinnober/msgcodec/issues
+ [issue]: https://github.com/cinnober/ciguan/issues
  [Cinnober CLA]: http://www.cinnober.com/cla
