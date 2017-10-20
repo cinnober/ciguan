@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration
+    id="Configuration"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://xml.cinnober.com/xsd/cwf-9.2.xsd">
+
+    <Version major="9" minor="2"/>
+
+    <AsLocales>
+        <AsDefaultPatterns>
+            <pattern type="Amount" value="#,##0.00"/>
+            <pattern type="Volume" value="#,##0.######"/>
+            <pattern type="Price" value="#,##0.00"/>
+            <pattern type="Decimal" value="#,##0.00"/>
+            <pattern type="Percent" value="#,##0.00'%'"/>
+            <pattern type="InterestRate" value="#,##0.000'%'"/>
+            <pattern type="BasisPoint" value="#,##0'bps'"/>
+            <pattern type="Date" value="yyyy-MM-dd"/>
+            <pattern type="Time" value="HH:mm:ss"/>
+            <pattern type="SecondsSinceTime" value="HH:mm:ss"/>
+            <pattern type="DateTime" value="yyyy-MM-dd HH:mm:ss"/>
+            <pattern type="Integer" value="#0"/>
+            <pattern type="Long" value="#0"/>
+            <pattern type="Double" value="#0.0#"/>
+        </AsDefaultPatterns>
+        <AsLocale id="en_US" group="," decimal=".">
+            <pattern type="Date" value="MM/dd/yyyy"/>
+            <pattern type="Time" value="hh:mm:ss a"/>
+            <pattern type="DateTime" value="MM/dd/yyyy hh:mm:ss a"/>
+        </AsLocale>
+    </AsLocales>
+
+    <AsMeta>
+
+        <SearchPackage packageName="com.cinnober.ciguan.data"/>
+        <SearchPackage packageName="com.cinnober.ciguan.locale.impl"/>
+
+        <MetaData className="AsSelectLanguageReq" serverRequestName="SessionRequest"/>
+        <MetaData className="AsSelectPerspectiveReq" serverRequestName="SessionRequest"/>
+        <MetaData className="AsResetUserPropertiesReq" serverRequestName="SessionRequest"/>
+        <MetaData className="AsClientUserSettings" serverRequestName="SessionRequest"/>
+        <MetaData className="AsSetClientLogLevelReq" serverRequestName="AsSetClientLogLevelReq"/>
+        <MetaData className="AsFileUploadReq" serverRequestName="FileUploadRequest"/>
+
+    </AsMeta>
+
+<!--     <AsPlugins> -->
+        <!-- JMX metrics start-up plug-in -->
+<!--         <Plugin pluginClass="com.cinnober.ciguan.jmx.plugin.AsMetricsPlugin"/> -->
+<!--     </AsPlugins> -->
+
+    <AsBeanFactory>
+        <!--  -->
+        <!-- Interfaces -->
+        <!--  -->
+        <bean
+            interface="com.cinnober.ciguan.AsCacheIf"
+            class="com.cinnober.ciguan.impl.AsCache"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.AsMetaDataHandlerIf"
+            class="com.cinnober.ciguan.meta.AsMetaDataHandler"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.AsMetaDataFactoryIf"
+            class="com.cinnober.ciguan.transport.impl.AsMetaDataFactory"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.AsTransportConfigurationIf"
+            class="com.cinnober.ciguan.transport.impl.AsTransportConfiguration"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.AsBdxHandlerIf"
+            class="com.cinnober.ciguan.impl.AsBdxHandlerImpl"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.AsBdxMapperIf"
+            class="com.cinnober.ciguan.impl.AsBdxMapper"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.AsRootIf"
+            class="com.cinnober.ciguan.impl.AsRootImpl"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.AsAuthorizationHandlerIf"
+            class="com.cinnober.ciguan.impl.AsAuthorizationHandler"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.AsLoggerIf"
+            class="com.cinnober.ciguan.impl.AsLogger"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.AsConnectionIf"
+            class="com.cinnober.ciguan.impl.AsConnectionImpl"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.datasource.AsSessionDataSourcesIf"
+            class="com.cinnober.ciguan.datasource.owner.AsSessionDataSources"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.AsUserPropertyPersisterIf"
+            class="com.cinnober.ciguan.impl.AsUserPropertyPersister"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.datasource.AsDataSourceServiceIf"
+            class="com.cinnober.ciguan.datasource.impl.AsDataSourceServiceImpl"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.request.AsRequestServiceIf"
+            class="com.cinnober.ciguan.request.impl.AsRequestService"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.transport.AsTransportServiceIf"
+            class="com.cinnober.ciguan.transport.impl.AsTransportService"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.AsSessionDataIf"
+            class="com.cinnober.ciguan.impl.AsSessionDataImpl"
+            singleton="false"
+            parameters="true"/>
+        <bean
+            interface="com.cinnober.ciguan.transport.AsRequestTransformerIf"
+            class="com.cinnober.ciguan.transport.util.AsRequestTransformer"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.transport.AsSuppressionDictionaryIf"
+            class="com.cinnober.ciguan.transport.util.AsSuppressionDictionary"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.transport.AsMetaDataCreatorIf"
+            class="com.cinnober.ciguan.transport.util.AsMetaDataCreator"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.AsFormatIf"
+            class="com.cinnober.ciguan.datasource.getter.AsFormat"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.AsTransportConfigurationIf"
+            class="com.cinnober.ciguan.transport.impl.AsTransportConfiguration"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.AsDictionaryHandlerIf"
+            class="com.cinnober.ciguan.locale.impl.AsDictionaryHandler"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.datasource.AsDataSourceExportIf"
+            class="com.cinnober.ciguan.datasource.impl.AsDataSourceExport"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.rest.AsRestConfigurationIf"
+            class="com.cinnober.ciguan.rest.impl.AsRestConfiguration"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.jmx.AsMetricsMBean"
+            class="com.cinnober.ciguan.jmx.impl.AsMetrics"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.scheduler.AsSchedulerIf"
+            class="com.cinnober.ciguan.scheduler.impl.AsScheduler"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.service.AsServiceHandlerIf"
+            class="com.cinnober.ciguan.service.impl.AsServiceHandler"
+            singleton="false"
+            parameters="false"/>
+
+        <!--  -->
+        <!-- Classes -->
+        <!--  -->
+        <bean
+            interface="com.cinnober.ciguan.datasource.owner.AsGlobalDataSources"
+            class="com.cinnober.ciguan.datasource.owner.AsGlobalDataSources"
+            singleton="false"
+            parameters="false"/>
+        <bean
+            interface="com.cinnober.ciguan.datasource.owner.AsMemberDataSources"
+            class="com.cinnober.ciguan.datasource.owner.AsMemberDataSources"
+            singleton="false"
+            parameters="true"/>
+        <bean
+            interface="com.cinnober.ciguan.datasource.owner.AsUserDataSources"
+            class="com.cinnober.ciguan.datasource.owner.AsUserDataSources"
+            singleton="false"
+            parameters="true"/>
+    </AsBeanFactory>
+
+    <AsTransportConfiguration>
+        <!-- Transport plugins -->
+        <Plugin pluginClass="com.cinnober.ciguan.transport.plugin.AsDataSourcePlugin"/>
+        <Plugin pluginClass="com.cinnober.ciguan.transport.plugin.AsSessionPlugin"/>
+        <Plugin pluginClass="com.cinnober.ciguan.transport.plugin.AsRequestPlugin"/>
+        <Plugin pluginClass="com.cinnober.ciguan.transport.plugin.AsFileUploadPlugin"/>
+        <Plugin pluginClass="com.cinnober.ciguan.transport.plugin.AsClientLogPlugin"/>
+        <Plugin pluginClass="com.cinnober.ciguan.transport.plugin.AsFormHandlerPlugin"/>
+    </AsTransportConfiguration>
+
+    <AsDataSources>
+        <!--  xml data sources -->
+        <AsList id="DATASOURCE_DEF" type="AsDataSourceDef" key="id" text="id"/>
+        <AsList id="PERSPECTIVES_ALL" type="AsPerspectiveData" key="key" text="id" userFilter="AsPerspectiveFilter"/>
+        <AsList id="METADATA_ALL" type="AsMetaDataData" key="key" text="metadata"/>
+        <AsList id="AsMetaObject" type="AsMetaObject" key="name" text="name"/>
+        <AsList id="AsMetaField" type="AsMetaField" key="name" text="owner,name"/>
+        <AsList id="MENUITEMS_ALL" type="AsMenuItem" key="id" text="id" userFilter="AsMenuItemsFilter"/>
+        <AsList id="MVC_VIEWDEFS_ALL" type="AsViewDefinition" key="id" text="id" userFilter="AsViewDefinitionFilter"/>
+        <AsList id="MVC_DISPLAYDEFS_ALL" type="AsDisplayDefinition" key="id" text="id"/>
+        <AsList id="CONTEXTMENUS_ALL" type="AsContextMenu" key="contextMenuKey" text="type"/>
+        <AsList id="LANGUAGE_ALL" type="AsDictionaryLanguage" key="key" text="key"/>
+        <AsList id="LOCALES_ALL" type="AsLocale" key="id" text="id"/>
+        <AsList id="DICTIONARY" type="AsDictionaryWord" key="key" text="text"/>
+        <AsList id="TRANSLATIONS" type="AsDictionaryTranslations" key="locale" text="translations"/>
+        <AsList id="USER_PREFERENCES_ALL" type="AsUserPreference" key="id" text="text" userFilter="AsUserPreferenceFilter"/>
+        <AsList id="TIMEZONES_ALL" factory="com.cinnober.ciguan.datasource.owner.AsTimeZonesListFactory"/>
+        <AsList id="CWF_PLUGINS_ALL" type="AsPluginInfo" key="id" text="id"/>
+        <AsList id="AsClientLog" type="AsClientLogEntry" key="key" text="message"/>
+        <AsList id="AsClientSession" type="AsClientSession" key="sessionId" text="sessionId"/>
+    </AsDataSources>
+
+    <AsMvc>
+        <!-- Special views -->
+        <view id="AddSlotView" type="none"/>
+        <view id="HelpIndexView" type="none"/>
+        <view id="NotificationView" type="none"/>
+        <view id="PerspectivePickerView" type="none"/>
+        <view id="ReloadConfigurationView" type="none"/>
+        <view id="ResetPerspectiveView" type="none"/>
+        <view id="SessionView" type="none"/>
+        <view id="SideMenuView" type="menu"/>
+        <view id="StyleSelectorView" type="none"/>
+        <view id="TopMenuView" type="menu"/>
+        <view id="UserInfoView" type="none"/>
+        <view id="ViewportEditorView" type="none"/>
+        <view id="ViewSelectorView" type="none"/>
+
+        <!-- Internal custom views -->
+        <view id="AlertView" type="custom" dockable="false" resizable="false" accService=""/>
+        <view id="ConfirmView" type="custom" dockable="false" resizable="false" accService=""/>
+        <view id="ErrorView" type="custom" dockable="false" resizable="false" accService=""/>
+        <view id="InfoView" type="custom" dockable="false" resizable="false" accService=""/>
+        <view id="ManageColumnsView" type="custom" modal="true" dockable="false" resizable="false" accService=""/>
+        <view id="EditFilterView" type="custom" modal="true" dockable="false" accService=""/>
+        <view id="QuickFilterView" type="custom" accService=""/>
+        <view id="PlaceholderView" type="custom" accService=""/>
+
+        <!-- Other internal views -->
+        <view id="HelpView" type="iframe" accService="">
+            <context type="MenuParameters"/>
+        </view>
+
+        <!-- Standard views -->
+        <view id="DataSourceExportView" type="form" model="AsDataSourceExportReq">
+            <context type="AsDataSourceExportReq" source="." target="."/>
+            <layout>
+                <fieldset id="common">
+                    <field name="returnType"/>
+                </fieldset>
+            </layout>
+        </view>
+
+        <view id="ClientLogEntryDetailsView" type="detail" model="AsClientLogEntry">
+            <context type="AsClientLogEntry" source="." target="."/>
+            <layout>
+                <fieldset id="Entry" width="500">
+                    <field name="sessionId"/>
+                    <field name="browserDetails" />
+                    <field name="timestamp"/>
+                    <field name="level"/>
+                    <field name="message"/>
+                    <field name="stacktrace" businessType="MultiLineText"/>
+                </fieldset>
+            </layout>
+        </view>
+
+        <view id="SetClientSessionLogLevelView" type="form" model="AsSetClientLogLevelReq">
+            <context type="AsClientSession" source="sessionId" target="sessionId"/>
+            <layout>
+                <fieldset id="Common">
+                    <field name="sessionId" readOnly="true"/>
+                    <field name="logLevel"/>
+                </fieldset>
+            </layout>
+        </view>
+
+        <view id="AsClientSessionsViewportView" type="table" dataSourceId="AsClientSession">
+            <display type="table">
+                <field name="sessionId" width="250"/>
+                <field name="createdAt" width="150"/>
+                <field name="userId"/>
+                <field name="browserDetails" width="600"/>
+            </display>
+        </view>
+
+        <view id="AsClientLogViewportView" type="table" dataSourceId="AsClientLog">
+            <display type="table">
+                <field name="timestamp" width="150"/>
+                <field name="level" width="60"/>
+                <field name="message" width="300"/>
+                <field name="sessionId" width="250" visible="false"/>
+                <field name="browserDetails" width="600"/>
+            </display>
+        </view>
+
+        <view id="AsMetaObjectViewport" type="table" dataSourceId="AsMetaObject">
+            <display type="table">
+                <field name="name"/>
+                <field name="idField"/>
+                <field name="displayField"/>
+                <field name="stateField"/>
+                <field name="serverRequestName"/>
+            </display>
+        </view>
+
+        <view id="AsMetaFieldViewport" type="table" dataSourceId="AsMetaField">
+            <display type="table">
+                <field name="owner"/>
+                <field name="name"/>
+                <field name="type"/>
+                <field name="businessType"/>
+                <field name="constant"/>
+                <field name="isObject"/>
+                <field name="isArray"/>
+            </display>
+        </view>
+
+        <view id="IframeView" type="iframe">
+            <context type="MenuParameters"/>
+        </view>
+
+        <view id="ClientUserSettingsView" type="form" model="AsClientUserSettings" onSuccess="reload">
+            <context type="SessionModel" source="clientUserSettings" target="."/>
+            <layout>
+                <fieldset id="Common">
+                    <field name="showNotificationPopup"/>
+                </fieldset>
+            </layout>
+        </view>
+
+        <!-- About view -->
+        <view id="AboutView" type="about" dockable="false" resizable="false"/>
+
+        <view id="SelectLanguageView" type="form" model="AsSelectLanguageReq" onSuccess="reload" accService="">
+            <context type="MenuParameters" source="languageCode" target="languageCode"/>
+            <!--  context type="MenuParameters" source="autoSubmit" target="autoSubmit"/ -->
+            <layout>
+                <fieldset id="Languages" width="230">
+                    <field name="languageCode" dataSourceId="LANGUAGE_ALL"/>
+                </fieldset>
+            </layout>
+        </view>
+        <view id="SelectPerspectiveView" type="form" model="AsSelectPerspectiveReq" onSuccess="reload" accService="">
+            <context type="MenuParameters" source="perspective" target="perspective"/>
+            <layout>
+                <fieldset id="Perspectives">
+                    <field name="perspective" dataSourceId="PERSPECTIVES_ALL"/>
+                </fieldset>
+            </layout>
+        </view>
+        <view id="MenuItemsViewportView" type="table" dataSourceId="MENUITEMS_ALL">
+            <display type="table">
+                <field name="id"/>
+                <field name="text"/>
+                <field name="accService"/>
+                <field name="view"/>
+                <field name="model"/>
+            </display>
+        </view>
+        <view id="ContextMenusViewportView" type="table" dataSourceId="CONTEXTMENUS_ALL">
+            <display type="table">
+                <field name="contextMenuKey"/>
+                <field name="type"/>
+            </display>
+        </view>
+        <view id="ViewDefinitionsViewportView" type="table" dataSourceId="MVC_VIEWDEFS_ALL" filterable="false">
+            <display type="table">
+                <field name="id" width="250"/>
+                <field name="type" width="60"/>
+                <field name="module" width="250"/>
+            </display>
+        </view>
+        <view id="DictionaryViewportView" type="table" dataSourceId="DICTIONARY">
+            <display type="table">
+                <field name="word"/>
+                <field name="context"/>
+                <field name="view"/>
+                <field name="en_US"/>
+                <field name="sv_SE"/>
+                <field name="ru_RU"/>
+                <field name="ja_JP"/>
+            </display>
+        </view>
+        <view id="LanguageViewportView" type="table" dataSourceId="LANGUAGE_ALL">
+            <display type="table">
+                <field name="key"/>
+                <field name="text"/>
+            </display>
+        </view>
+        <view id="MetaDataViewportView" type="table" dataSourceId="METADATA_ALL">
+            <display type="table">
+                <field name="key"/>
+                <field name="metadata"/>
+            </display>
+        </view>
+        <view id="CwfPluginsViewportView" type="table" dataSourceId="CWF_PLUGINS_ALL">
+            <display type="table">
+                <field name="id"/>
+                <field name="version"/>
+                <field name="author"/>
+            </display>
+        </view>
+        <view id="AsLocalesViewportView" type="table" dataSourceId="LOCALES_ALL">
+            <display type="table">
+                <field name="id"/>
+                <field name="groupSeparator"/>
+                <field name="decimalSeparator"/>
+            </display>
+        </view>
+        <view id="AsLocaleDetailsView" type="detail" model="AsLocale">
+            <context type="AsLocale" source="." target="."/>
+            <layout>
+                <fieldset id="Common">
+                    <field name="id"/>
+                    <field name="groupSeparator"/>
+                    <field name="decimalSeparator"/>
+                </fieldset>
+                <fieldset id="Patterns" path="patterns">
+                    <field name="type"/>
+                    <field name="value"/>
+                </fieldset>
+            </layout>
+        </view>
+
+        <view id="UserPreferencesViewportView" type="table" dataSourceId="USER_PREFERENCES_ALL">
+            <display type="table">
+                <field name="text"/>
+            </display>
+        </view>
+
+    </AsMvc>
+
+    <AsMenus>
+        <menuitems>
+            <menuitem id="separator"/>
+        </menuitems>
+        <contextmenus>
+            <contextmenu type="Session">
+                <menu id="system">
+                    <menuitem view="ClientUserSettingsView"/>
+                </menu>
+                <menu id="languages">
+                    <menuitem view="SelectLanguageView" expand="$model.languageCode" autoSubmit="true" />
+                </menu>
+            </contextmenu>
+            <contextmenu type="AsViewDefinition">
+                <menuitem view="ViewSelectorView"/>
+            </contextmenu>
+            <contextmenu type="AsLocale">
+                <menuitem view="AsLocaleDetailsView"/>
+            </contextmenu>
+            <contextmenu type="AsClientSession">
+                <menuitem view="SetClientSessionLogLevelView" filter="userId!=null"/>
+            </contextmenu>
+            <contextmenu type="AsClientLogEntry">
+                <menuitem view="ClientLogEntryDetailsView"/>
+            </contextmenu>
+        </contextmenus>
+    </AsMenus>
+
+</Configuration>

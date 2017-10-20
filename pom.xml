@@ -1,0 +1,112 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.cinnober.ciguan</groupId>
+  <artifactId>ciguan</artifactId>
+  <packaging>jar</packaging>
+  <version>0.1.0</version>
+  <name>ciguan</name>
+  <url>http://github.com/cinnober/ciguan</url>
+
+  <issueManagement>
+    <url>https://github.com/cinnober/ciguan/issues</url>
+    <system>GitHub Issues</system>
+  </issueManagement>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://github.com/cinnober/ciguan/license.txt</url>
+      <distribution>repo</distribution>
+          <!--
+              repo - may be downloaded from the Maven repository
+              manual - user must manually download and install the dependency.
+          -->
+    </license>
+  </licenses>
+
+  <scm>
+    <url>https://github.com/cinnober/ciguan</url>
+    <connection>scm:git:git://github.com/cinnober/ciguan.git</connection>
+    <developerConnection>scm:git:git@github.com:cinnober/ciguan.git</developerConnection>
+  </scm>
+
+  <developers>
+    <developer>
+      <email>anders.thyberg@cinnober.com</email>
+      <name>Anders Thyberg</name>
+      <url>https://github.com/athyberg</url>
+      <id>athyberg</id>
+    </developer>
+    <developer>
+      <email>magnus.lenti@cinnober.com</email>
+      <name>Magnus Lenti</name>
+      <url>https://github.com/moobinse</url>
+      <id>moobinse</id>
+    </developer>
+    <developer>
+      <email>stefan.bylund@cinnober.com</email>
+      <name>Stefan Bylund</name>
+      <url>https://github.com/stefanbylund</url>
+      <id>stefanbylund</id>
+    </developer>
+    <developer>
+      <email>westblad@cinnober.com</email>
+      <name>Pär Westblad</name>
+      <url>https://github.com/pwestblad</url>
+      <id>pwestblad</id>
+    </developer>
+  </developers>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>xalan</groupId>
+      <artifactId>xalan</artifactId>
+      <version>2.7.1</version>
+    </dependency>
+  
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.3.3</version>
+    </dependency>
+  
+<!--     <dependency> -->
+<!--       <groupId>javax.servlet</groupId> -->
+<!--       <artifactId>javax.servlet-api</artifactId> -->
+<!--       <version>4.0.0</version> -->
+<!--       <scope>provided</scope> -->
+<!--     </dependency> -->
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
