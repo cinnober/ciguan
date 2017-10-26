@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+	<!--  simple types -->
+
+	<xs:simpleType name="Direction">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="vertical"/>
+			<xs:enumeration value="horizontal"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="slot-display-mode">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="grid"/>
+			<xs:enumeration value="single"/>
+			<xs:enumeration value="split"/>
+			<xs:enumeration value="tab"/>
+			<xs:enumeration value="tray"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="subscription-type">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="none"/>
+			<xs:enumeration value="replay"/>
+			<xs:enumeration value="snapshot"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+    <xs:simpleType name="device-type">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="desktop"/>
+            <xs:enumeration value="tablet"/>
+            <xs:enumeration value="mobile"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="orientation-type">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="landscape"/>
+            <xs:enumeration value="portrait"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+	<xs:simpleType name="data-source-id">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="[a-zA-Z_\-]+"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="slot-id">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="[a-z][a-z0-9-]*"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="view-id">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="[A-Z][A-Za-z0-9_]*"/>
+	    </xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="display-id">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Za-z]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="role-id">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="[A-Za-z_]+"/>
+	    </xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="perspective-id">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="[A-Za-z_,]+"/>
+	    </xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="menu-id">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="[A-Za-z_]+"/>
+	    </xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="acc-service">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="[A-Za-z_]*"/>
+	    </xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="fieldset-name">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="[A-Za-z]+"/>
+	    </xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="button-name">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="[a-zA-Z]+"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="button-type">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="forward"/>
+			<xs:enumeration value="open"/>
+			<xs:enumeration value="submit"/>
+            <xs:enumeration value="close"/>
+            <xs:enumeration value="reset"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="display-type">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="line"/>
+			<xs:enumeration value="table"/>
+			<xs:enumeration value="vbar"/>
+			<xs:enumeration value="editable"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="translatable">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="[A-Za-z]+"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="field-name">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="[a-z][A-Za-z0-9]*"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="field-path">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="(.|[A-Za-z0-9_]+(\[\d+\])?(\.[A-Za-z0-9_]+)*)"/>
+	    </xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="context-path">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="([A-Za-z0-9_]+(\[\])?(\.[A-Za-z0-9_]+)*)"/>
+	    </xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="field-value">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="(.|(\$context\.)?[A-Za-z0-9_/, \-']+(\[0\])?(\.[A-Za-z]+)*|\d+)?"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="field-paths">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="[A-Za-z0-9_]+(\.[A-Za-z0-9_]+)*(,[A-Za-z0-9_]+(\.[A-Za-z0-9_]+)*)*"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="class-name">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="[A-Za-z]+(.[A-Za-z]+)*"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="object-type">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="[A-Z][A-Za-z0-9_]*(\[\])*"/>
+	    </xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="partition">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]+(:\d*)?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="FilterExpression">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+
+	<xs:simpleType name="FilterExpressionOnNode">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="class:[a-zA-Z.]+|([A-Za-z.]+(=|!=)(\.\./)?[A-Za-z0-9.]*,?)+"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="context-filter">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="[A-Za-z_.]+(=|!=|~=|\|=)([0-9A-Za-z_.]+|'\S*')(,[A-Za-z_.]+(=|!=|~=|\|=)([0-9A-Za-z_.]+|'\S*'))*"/>
+	    </xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="field-filter">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+
+	<xs:simpleType name="field-disable-filter">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="dictionary-path">
+		<xs:restriction base="xs:string">
+	    	<xs:pattern value="/com/cinnober(/[a-zA-Z0-9_]+)+\.properties"/>
+	    </xs:restriction>
+	</xs:simpleType>
+	
+    <xs:simpleType name="position-type">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(first|after:.+|before:.+)"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+	<xs:simpleType name="sort-order">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="ascending"/>
+			<xs:enumeration value="descending"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="view-type">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="about"/>
+			<xs:enumeration value="custom"/>
+			<xs:enumeration value="detail"/>
+			<xs:enumeration value="form"/>
+			<xs:enumeration value="menu"/>
+			<xs:enumeration value="none"/>
+			<xs:enumeration value="table"/>
+			<xs:enumeration value="tree"/>
+			<xs:enumeration value="search"/>
+			<xs:enumeration value="iframe"/>
+			<xs:enumeration value="chart"/>
+			<xs:enumeration value="fileupload"/>
+		</xs:restriction>
+	</xs:simpleType>
+    
+    <xs:simpleType name="axis-type">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(x:[0-9]|y:[0-9]|x|y)"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="chart-type">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="area"/>
+            <xs:enumeration value="bar"/>
+            <xs:enumeration value="column"/>
+            <xs:enumeration value="columnrange"/>
+            <xs:enumeration value="donut"/>
+            <xs:enumeration value="line"/>
+            <xs:enumeration value="pie"/>
+            <xs:enumeration value="stackedbar"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="summary-type">
+        <xs:union>
+            <xs:simpleType>
+                <xs:restriction base="xs:NMTOKEN">
+                    <xs:enumeration value="avg"/>
+                    <xs:enumeration value="count"/>
+                    <xs:enumeration value="max"/>
+                    <xs:enumeration value="min"/>
+                    <xs:enumeration value="sum"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="custom:[A-Za-z]+(.[A-Za-z]+)*"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+    
+    <xs:simpleType name="direction-type">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="in"/>
+            <xs:enumeration value="out"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+</xs:schema>

@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+	<xs:include schemaLocation="cwf-simple-types.xsd"/>
+	
+    <xs:simpleType name="major-version">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="minor-version">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+	<xs:complexType name="version">
+		<xs:attribute name="major" type="major-version" use="required"/>
+		<xs:attribute name="minor" type="minor-version" use="required"/>
+	</xs:complexType>
+	
+	<xs:element name="Configuration">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Version" type="version"/>
+	  			<xs:element ref="inherits" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="AsLocales" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="AsMeta" minOccurs="0" maxOccurs="1"/>
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="CwfPlugin" type="CwfPluginDefinition"/>
+					<xs:element name="AsPlugins" type="AsPlugins"/>
+					<xs:element name="AsDictionary" type="Dictionary"/>
+					<xs:element name="AsBeanFactory" type="BeanDefinitions"/>
+					<xs:element name="AsTransportConfiguration" type="TransportDefinitions"/>
+					<xs:element name="AsDataSources" type="DataSourceDefinitions"/>
+					<xs:element name="AsGetMethods" type="GetMethodDefinitions"/>
+					<xs:element name="AsMvc" type="ViewDefinitions"/>
+					<xs:element name="AsPerspectives" type="PerspectiveDefinitions"/>
+					<xs:element name="AsMenus" type="MenuDefinitions"/>
+				</xs:choice>
+			</xs:sequence>
+			<xs:attribute name="id" fixed="Configuration" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="CwfPluginDefinition">
+		<xs:attribute name="id" type="xs:string"/>
+		<xs:attribute name="version" type="xs:string"/>
+		<xs:attribute name="author" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="Dictionary">
+		<xs:attribute name="path" type="dictionary-path"/>
+	</xs:complexType>
+	
+	<xs:complexType name="BeanDefinitions">
+		<xs:sequence>
+			<xs:element name="bean" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="interface" type="class-name" use="required"/>
+					<xs:attribute name="class" type="class-name" use="required"/>
+					<xs:attribute name="singleton" type="xs:boolean" default="false"/>
+					<xs:attribute name="parameters" type="xs:boolean" default="false"/>
+				</xs:complexType>			
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="TransportDefinitions">
+		<xs:sequence>
+			<xs:element name="Plugin" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="pluginClass" type="class-name"/>
+					<xs:attribute name="remove" type="class-name"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="RequestTransformerConfiguration" type="RequestTransformDefinitions" minOccurs="0"/>
+            <!-- TODO: remove MetaData, moved to AsMeta tag -->
+			<xs:element name="MetaData" type="MetaData" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="BdxFlowHandler" type="ClassReference" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="BdxClass" type="ClassReference" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="BdxProcessor" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="className" type="class-name"/>
+					<xs:attribute name="parameters" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="AccDefinitions" type="ClassReference" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="Cache" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>   
+                        <xs:element name="CacheListener" type="ClassReference" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                    <xs:attribute name="id" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+			<xs:element name="SubscribeBdx" type="SubscriptionDefinition" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="MetaData">
+		<xs:complexContent>
+			<xs:extension base="ClassReference">
+				<xs:sequence>
+					<xs:element name="Attribute" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:attribute name="attributeName" type="field-name"/>
+							<xs:attribute name="businessType" type="business-type"/>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="serverRequestName" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:element name="AsLocales">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AsDefaultPatterns" type="AsPatternCollection" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="AsLocale" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="AsLocale">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="AsPatternCollection">
+					<xs:attribute name="id" type="xs:string"/>
+					<xs:attribute name="group" type="xs:string"/>
+					<xs:attribute name="decimal" type="xs:string"/>
+					<xs:attribute name="remove" type="xs:string"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="AsPatternCollection">
+		<xs:sequence>
+			<xs:element name="pattern" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="type" type="xs:string" use="required"/>
+					<xs:attribute name="value" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	<xs:complexType name="AsPlugins">
+		<xs:sequence>
+			<xs:element name="Plugin" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="pluginClass" type="class-name" use="required"/>
+					<xs:attribute name="parameters" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+ 
+    <xs:element name="AsMeta">
+        <xs:complexType>
+            <xs:sequence>
+    			<xs:element name="SearchPackage" minOccurs="0" maxOccurs="unbounded">
+    				<xs:complexType>
+    					<xs:attribute name="packageName" type="class-name" use="required"/>
+    				</xs:complexType>
+    			</xs:element>
+                <xs:element name="MetaData" type="MetaData" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="SuppressAttribute" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:attribute name="attributeName" type="field-name" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="SuppressClass" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:attribute name="className" type="object-type" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="SuppressClassAttribute" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:attribute name="className" type="object-type" use="required"/>
+                        <xs:attribute name="attributeName" type="field-name" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+	<xs:complexType name="ClassReference">
+		<xs:attribute name="className" type="class-name" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="SubscriptionDefinition">
+		<xs:complexContent>
+			<xs:extension base="ClassReference">
+				<xs:sequence>
+					<xs:element name="SubscribePartition" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:attribute name="partition" type="partition"/>
+							<xs:attribute name="bdxPartition" type="xs:int"/>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="market" use="required" type="xs:string"/>
+				<xs:attribute name="type" fixed="replay" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+		
+	</xs:complexType>
+
+	<xs:complexType name="RequestTransformDefinitions">
+		<xs:sequence>
+            <!-- TODO remove suppress tags here, moved to AsMeta -->
+			<xs:element name="SuppressAttribute" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="attributeName" type="field-name" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SuppressClass" type="ClassReference" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="SuppressClassAttribute" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="className" type="class-name" use="required"/>
+					<xs:attribute name="attributeName" type="field-name" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="GenerateUniqueId" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="className" type="class-name" use="required"/>
+					<xs:attribute name="attributeName" type="field-path" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="CopyAttribute" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="className" type="class-name" use="required"/>
+					<xs:attribute name="fromAttributeName" type="field-path" use="required"/>
+					<xs:attribute name="toAttributeName" type="field-path" use="required"/>
+				</xs:complexType>
+			</xs:element>
+            <!--  TODO remove this, moved to AsMeta -->
+			<xs:element name="SearchPackage" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="packageName" type="class-name" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="DataSourceDefinitions">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="AsList" type="DataSourceDefinition"/>
+			<xs:element name="AsTree" type="TreeDefinition"/>
+			<xs:element name="AsListTree" type="ListTreeDefinition"/>
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:complexType name="DataSourceDefinition">
+		<xs:sequence>
+			<xs:element name="AsList" type="DataSourceDefinition" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="data-source-id"/>
+		<xs:attribute name="key" type="field-paths"/>
+		<xs:attribute name="text" type="field-paths"/>
+		<xs:attribute name="memberFilter" type="class-name"/>
+		<xs:attribute name="userFilter" type="class-name"/>
+		<xs:attribute name="factory" type="class-name"/>
+		<xs:attribute name="type" type="object-type"/>
+		<xs:attribute name="filter" type="FilterExpression"/>
+		<xs:attribute name="query" fixed="true"/>
+		<xs:attribute name="source" type="data-source-id"/>
+		<xs:attribute name="modify" type="data-source-id"/>
+        <xs:attribute name="state" type="field-paths"/>
+	</xs:complexType>
+
+	<xs:complexType name="TreeDefinition">
+		<xs:sequence>
+			<xs:element name="root" type="TreeNode"/>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="node" type="TreeNode" minOccurs="0"/>
+				<xs:element name="link" type="TreeLink" minOccurs="0"/>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="id" type="data-source-id" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="TreeNode">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="folder" type="TreeNodeChildren"/>
+			<xs:element name="child" type="TreeNodeChildren"/>
+		</xs:choice>
+		<xs:attribute name="type" type="object-type"/>
+	</xs:complexType>
+	
+	<xs:complexType name="TreeNodeChildren">
+		<xs:attribute name="source" type="data-source-id"/>
+		<xs:attribute name="type" type="object-type"/>
+		<xs:attribute name="filter" type="FilterExpressionOnNode"/>
+        <xs:attribute name="condition" type="FilterExpression"/>
+	</xs:complexType>
+	
+	<xs:complexType name="TreeLink">
+		<xs:sequence>
+			<xs:element name="child">
+				<xs:complexType>
+					<xs:attribute name="source" type="data-source-id"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="type" type="object-type"/>
+		<xs:attribute name="key" type="field-path"/>
+	</xs:complexType>
+
+	<xs:complexType name="ListTreeDefinition">
+		<xs:sequence>
+			<xs:element name="node" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="key" type="field-path"/>
+					<xs:attribute name="source" type="data-source-id"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="id" type="data-source-id" use="required"/>
+		<xs:attribute name="source" type="data-source-id" use="required"/>
+		<xs:attribute name="filter" type="FilterExpression"/>
+	</xs:complexType>
+	
+	<xs:complexType name="GetMethodDefinitions">
+		<xs:sequence>
+			<xs:element name="AsGetMethod" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="name" type="field-name"/>
+					<xs:attribute name="type" type="class-name"/>
+                    <xs:attribute name="expression" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="AsGetMethodSource" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AsGetMethod" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="name" type="field-name"/>
+								<xs:attribute name="type" type="object-type" use="required"/>
+								<xs:attribute name="field" type="field-path" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="source" type="object-type" use="required"/>
+					<xs:attribute name="name" type="field-name" use="required"/>
+					<xs:attribute name="field" type="field-path"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ViewDefinitions">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="view" type="ViewDefinition"/>
+			<xs:element name="display" type="DisplayDefinition"/>
+		</xs:choice>
+	</xs:complexType>
+	
+	<xs:complexType name="PerspectiveDefinitions">
+		<xs:sequence>
+			<xs:element name="role" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="perspective" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="ref" type="perspective-id"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="name" type="role-id" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="perspective" minOccurs="0" maxOccurs="unbounded" type="PerspectiveDefinition"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="PerspectiveDefinition">
+		<xs:sequence>
+			<xs:element name="content" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="group">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="slot" type="SlotDefinition" maxOccurs="unbounded"/>
+								</xs:sequence>
+								<xs:attribute name="direction" type="Direction"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="id" type="perspective-id"/>
+		<xs:attribute name="remove" type="perspective-id"/>
+	</xs:complexType>
+	
+	<xs:complexType name="SlotDefinition">
+		<xs:choice minOccurs="0">
+			<xs:element name="group" type="SlotGroupDefinition"/>
+			<xs:element name="view" maxOccurs="unbounded"/>
+		</xs:choice>
+		<xs:attribute name="id" type="slot-id"/>
+		<xs:attribute name="width" type="xs:int"/>
+		<xs:attribute name="height" type="xs:int"/>
+		<xs:attribute name="displayMode" type="slot-display-mode"/>
+	</xs:complexType>
+	
+	<xs:complexType name="SlotGroupDefinition">
+		<xs:sequence>
+			<xs:element name="slot" type="SlotDefinition" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="direction" type="Direction"/>
+	</xs:complexType>
+	
+	<xs:complexType name="MenuDefinitions">
+		<xs:sequence>
+			<xs:element name="menuitems" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="menuitem" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="id" type="menu-id" use="required"/>
+								<xs:attribute name="view" type="view-id"/>
+								<xs:attribute name="parameters" type="xs:string"/>
+								<xs:attribute name="autoSubmit" fixed="true"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="contextmenus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="contextmenu" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:choice minOccurs="0" maxOccurs="unbounded">
+									<xs:element name="menu" type="menu" maxOccurs="unbounded"/>
+									<xs:element name="menuitem" type="menuitem" maxOccurs="unbounded"/>
+								</xs:choice>
+								<xs:attribute name="type" type="object-type" use="required"/>
+								<xs:attribute name="view" type="view-id"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="menu">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="menu" type="menu"/>
+			<xs:element name="menuitem" type="menuitem"/>
+		</xs:choice>
+		<xs:attribute name="id" type="menu-id"/>
+		<xs:attribute name="ref" type="menu-id"/>
+        <xs:attribute name="remove" type="menu-id"/>
+		<xs:attribute name="perspective" type="perspective-id"/>
+	</xs:complexType>
+	
+	<xs:complexType name="menuitem">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="menuitem" type="menuitem"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="menu-id"/>
+		<xs:attribute name="perspective" type="perspective-id"/>
+		<xs:attribute name="view" type="view-id"/>
+		<xs:attribute name="filter" type="FilterExpression"/>
+		<xs:attribute name="ref" type="menu-id"/>
+		<xs:attribute name="autoSubmit" fixed="true"/>
+        <xs:attribute name="remove" type="menu-id"/>
+        <xs:attribute name="expand" type="xs:string"/>
+        <xs:attribute name="parameters" type="xs:string"/>
+        <xs:attribute name="confirmMessage" type="xs:string"/>
+	</xs:complexType>
+
+
+	<xs:element name="context">
+		<xs:complexType>
+            <xs:sequence>
+                <xs:element name="context-lookup" minOccurs="0" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:attribute name="type" type="object-type"/>
+                        <xs:attribute name="key" type="field-value"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+			<xs:attribute name="type" type="object-type" use="required"/>
+			<xs:attribute name="source" type="field-path"/>
+			<xs:attribute name="target" type="field-path"/>
+			<xs:attribute name="filter" type="context-filter"/>
+            <xs:attribute name="condition" type="context-filter"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="field">
+		<xs:complexType>
+			<xs:attribute name="name" type="field-path" use="required"/>
+			<xs:attribute name="dataSourceId" type="data-source-id"/>
+			<xs:attribute name="readOnly" type="xs:boolean"/>
+			<xs:attribute name="required" type="xs:boolean"/>
+			<xs:attribute name="width" type="xs:short"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="inherits">
+		<xs:complexType>
+			<xs:attribute name="name" type="class-name" use="required"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="DisplayDefinition">
+		<xs:sequence>
+			<xs:element name="threshhold" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="value" type="xs:int" use="required"/>
+					<xs:attribute name="color" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="id" type="display-id" use="required"/>
+		<xs:attribute name="type" type="xs:string" fixed="horizontal-bar"/>
+	</xs:complexType>
+	
+	<xs:complexType name="ViewDefinition">
+		<xs:sequence>
+			<xs:element name="blob" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="path" type="field-path"/>
+					<xs:attribute name="model" type="object-type"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="context"/>
+				<xs:element name="set">
+					<xs:complexType>
+						<xs:attribute name="target" type="field-path"/>
+						<xs:attribute name="value" type="field-value"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="clear">
+					<xs:complexType>
+						<xs:attribute name="target" type="field-path" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="sort" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="field" type="field-path" use="required"/>
+					<xs:attribute name="order" type="sort-order" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:choice minOccurs="0">
+				<xs:element name="layout" type="ViewLayout"/>
+				<xs:element name="display" type="ViewDisplay" maxOccurs="unbounded"/>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="id" type="view-id"/>
+		<xs:attribute name="modify" type="view-id"/>
+		<xs:attribute name="type" type="view-type"/>
+		<xs:attribute name="model" type="object-type"/>
+		<xs:attribute name="onSuccess">
+			<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+					<xs:enumeration value="reload"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="accService" type="acc-service"/>
+		<xs:attribute name="dataSourceId" type="data-source-id"/>
+		<xs:attribute name="targetView" type="view-id"/>
+		<xs:attribute name="extends" type="view-id"/>
+		<xs:attribute name="pinnable" fixed="true"/>
+		<xs:attribute name="focus" type="field-path"/>
+        <xs:attribute name="resizable" fixed="false"/>
+        <xs:attribute name="dockable" fixed="false"/>
+	</xs:complexType>
+	
+	<xs:complexType name="ViewLayout">
+		<xs:sequence minOccurs="0">
+			<xs:element name="fieldset" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="field" type="FieldSetField" maxOccurs="unbounded"/>
+						<xs:element name="view">
+							<xs:complexType>
+								<xs:attribute name="ref" type="view-id"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+					<xs:attribute name="id" type="fieldset-name" use="required"/>
+					<xs:attribute name="width" type="xs:int"/>
+					<xs:attribute name="path" type="field-path"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:sequence>
+				<xs:element name="buttonpanel" type="Buttons" minOccurs="0"/>
+				<xs:element name="group" type="FieldSetGrouping" minOccurs="0"/>
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="Buttons">
+		<xs:sequence>
+			<xs:element name="button" maxOccurs="unbounded">	
+				<xs:complexType>
+					<xs:attribute name="name" type="button-name" use="required"/>
+					<xs:attribute name="type" type="button-type" use="required"/>
+					<xs:attribute name="view" type="view-id"/>
+					<xs:attribute name="autoSubmit" fixed="true"/>
+					<xs:attribute name="confirmMessage" type="translatable"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="FieldSetGrouping">
+		<xs:sequence>
+			<xs:element name="group" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="fieldset" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="ref" type="fieldset-name"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="direction" type="Direction"/>
+	</xs:complexType>
+
+	<xs:complexType name="FieldSetField">
+		<xs:attribute name="name" type="field-path"/>
+		<xs:attribute name="text" type="xs:string"/>
+		<xs:attribute name="dataSourceId" type="data-source-id"/>
+		<xs:attribute name="readOnly" type="xs:boolean"/>
+		<xs:attribute name="required" type="xs:boolean"/>
+		<xs:attribute name="context" type="object-type"/>
+		<xs:attribute name="filter" type="field-filter"/>
+		<xs:attribute name="disabled" type="field-disable-filter"/>
+		<xs:attribute name="viewref" type="view-id"/>
+		<xs:attribute name="multiSelect" fixed="true"/>
+		<xs:attribute name="width" type="xs:int"/>
+		<xs:attribute name="updateContext" fixed="true"/>
+        <xs:attribute name="businessType" type="xs:string"/>
+        <xs:attribute name="position">
+        	<xs:simpleType>
+				<xs:restriction base="xs:NMTOKEN">
+        		    <xs:enumeration value="left"/>
+        		    <xs:enumeration value="right"/>
+        		</xs:restriction>
+        	</xs:simpleType>
+        </xs:attribute>
+	</xs:complexType>
+	
+	<xs:complexType name="ViewDisplay">
+		<xs:sequence>
+			<xs:element name="field" type="ViewDisplayField" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="type" type="display-type" use="required"/>
+		<xs:attribute name="default" type="xs:boolean"/>
+		<xs:attribute name="title" type="field-value"/>
+	</xs:complexType>
+
+	<xs:complexType name="ViewDisplayField">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="axis" type="xs:string"/>
+		<xs:attribute name="color" type="xs:string"/>
+		<xs:attribute name="businessType" type="xs:string"/>
+		<xs:attribute name="width" type="xs:short"/>
+		<xs:attribute name="displayRef" type="display-id"/>
+		<xs:attribute name="visible" fixed="false"/>
+        <xs:attribute name="readOnly" fixed="true"/>
+	</xs:complexType>
+	
+	
+</xs:schema>
