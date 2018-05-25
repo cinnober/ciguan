@@ -168,16 +168,16 @@
             class="com.cinnober.ciguan.datasource.impl.AsDataSourceExport"
             singleton="false"
             parameters="false"/>
-        <bean
-            interface="com.cinnober.ciguan.rest.AsRestConfigurationIf"
-            class="com.cinnober.ciguan.rest.impl.AsRestConfiguration"
-            singleton="false"
-            parameters="false"/>
-        <bean
-            interface="com.cinnober.ciguan.jmx.AsMetricsMBean"
-            class="com.cinnober.ciguan.jmx.impl.AsMetrics"
-            singleton="false"
-            parameters="false"/>
+<!--         <bean -->
+<!--             interface="com.cinnober.ciguan.rest.AsRestConfigurationIf" -->
+<!--             class="com.cinnober.ciguan.rest.impl.AsRestConfiguration" -->
+<!--             singleton="false" -->
+<!--             parameters="false"/> -->
+<!--         <bean -->
+<!--             interface="com.cinnober.ciguan.jmx.AsMetricsMBean" -->
+<!--             class="com.cinnober.ciguan.jmx.impl.AsMetrics" -->
+<!--             singleton="false" -->
+<!--             parameters="false"/> -->
         <bean
             interface="com.cinnober.ciguan.scheduler.AsSchedulerIf"
             class="com.cinnober.ciguan.scheduler.impl.AsScheduler"

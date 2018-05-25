@@ -63,7 +63,7 @@ public class ConfigurationTest extends AsConfigurationTestBase implements MvcMod
 	/**
 	 * Default module name to test. Set this to your own module in your BeforeClass initializer method.
 	 */
-	public static String cModule = "com.cinnober.ciguan.conf.As";
+	public static String cModule = "com.cinnober.ciguan.conf.Application";
 
 	/**
 	 * Comma separated list of constant group class names (without package) used
