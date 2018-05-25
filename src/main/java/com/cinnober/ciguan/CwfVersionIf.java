@@ -35,9 +35,11 @@ public interface CwfVersionIf {
     /**
      * The current version number in "Dewey Decimal" notation.
      */
-    String VERSION = "10.5.1";
-    String NAME = "iGUAN / Cinnober Web Framework";
-    String CODENAME = "Greenleaf Service Release 1";
+    String NAME = "CIGUAN";
+    String VERSION = "0.1.0";
+    String CODENAME = "Greenleaf";
+    String COPYRIGHT = "Copyright (c) 2018 Cinnober Financial Technology AB (cinnober.com). ";
+    String LICENCE = "The MIT License (MIT)";
     
     /**
      * @return the major version
@@ -98,9 +100,11 @@ public interface CwfVersionIf {
         
         @Override
         public String toString() {
-            return NAME + " - Version " + VERSION + " (" + CODENAME + ")";
+            return NAME + System.lineSeparator() 
+                 + VERSION + " (" + CODENAME + ")" + System.lineSeparator() 
+                 + COPYRIGHT + System.lineSeparator() 
+                 + LICENCE;
         }
-        
     }
     
 }
