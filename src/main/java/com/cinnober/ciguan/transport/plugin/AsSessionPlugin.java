@@ -35,6 +35,7 @@ import com.cinnober.ciguan.AsLoggerIf;
 import com.cinnober.ciguan.AsRootIf;
 import com.cinnober.ciguan.AsSessionDataIf;
 import com.cinnober.ciguan.CwfDataIf;
+import com.cinnober.ciguan.CwfMessageIf;
 import com.cinnober.ciguan.client.MvcUserPreferenceAttributesIf;
 import com.cinnober.ciguan.client.impl.MvcEventEnum;
 import com.cinnober.ciguan.client.impl.MvcModelNames;
@@ -117,7 +118,7 @@ public class AsSessionPlugin extends AsTransportPlugin implements MvcUserPrefere
     }
 
     @Override
-    public void onMessage(AsConnectionIf pConnection, CwfMessage pMessage) {
+    public void onMessage(AsConnectionIf pConnection, CwfMessageIf pMessage) {
 
         CwfDataIf tData = pMessage.getData();
         // Query session state
@@ -268,7 +269,7 @@ public class AsSessionPlugin extends AsTransportPlugin implements MvcUserPrefere
      * @param pConnection the connection
      * @param pMessage the message
      */
-    protected void resetUserProperties(AsConnectionIf pConnection, CwfMessage pMessage) {
+    protected void resetUserProperties(AsConnectionIf pConnection, CwfMessageIf pMessage) {
         // Empty the user data source
         // NOTE: We cannot do a clear on the list since it is a child, instead we have to emulate
         // remove broadcasts
@@ -307,7 +308,7 @@ public class AsSessionPlugin extends AsTransportPlugin implements MvcUserPrefere
      * @param pConnection the connection
      * @param pMessage the message
      */
-    protected void saveClientUserSettings(AsConnectionIf pConnection, CwfMessage pMessage) {
+    protected void saveClientUserSettings(AsConnectionIf pConnection, CwfMessageIf pMessage) {
 //        CwfDataIf tPreferences = pMessage.getData();
 //        AsUserPreference tPreference = new AsUserPreference(
 //            pConnection.getSessionData().getUser(), PREF_CLIENT_USER_SETTINGS, SerializationUtil.toJson(tPreferences));
@@ -323,7 +324,7 @@ public class AsSessionPlugin extends AsTransportPlugin implements MvcUserPrefere
      * @param pConnection the connection
      * @param pMessage the message
      */
-    protected void setLocale(AsConnectionIf pConnection, CwfMessage pMessage) {
+    protected void setLocale(AsConnectionIf pConnection, CwfMessageIf pMessage) {
         String tLocale = pMessage.getData().getProperty(ATTR_LANGUAGE_CODE);
         pConnection.setLocale(tLocale);
         CwfDataIf tData = CwfDataFactory.create(MvcModelNames.SelectLocaleResponse);
@@ -331,7 +332,7 @@ public class AsSessionPlugin extends AsTransportPlugin implements MvcUserPrefere
             tData.setProperty(ATTR_LANGUAGE_CODE, pConnection.getLocale().toString());
             tData.setProperty(ATTR_STATUS_CODE, As.STATUS_CODE_OK);
         }
-        CwfMessage tResponse = new CwfMessage(tData, pMessage.getHandle());
+        CwfMessageIf tResponse = new CwfMessage(tData, pMessage.getHandle());
         pConnection.getTransportService().addClientMessage(tResponse);
     }
 
@@ -341,13 +342,13 @@ public class AsSessionPlugin extends AsTransportPlugin implements MvcUserPrefere
      * @param pConnection the connection
      * @param pMessage the message
      */
-    protected void setPerspective(AsConnectionIf pConnection, CwfMessage pMessage) {
+    protected void setPerspective(AsConnectionIf pConnection, CwfMessageIf pMessage) {
         String tPerspective = pMessage.getData().getProperty(ATTR_PERSPECTIVE);
 
         CwfDataIf tData = CwfDataFactory.create(MvcModelNames.SelectPerspectiveResponse);
         tData.setProperty(ATTR_PERSPECTIVE, tPerspective);
         tData.setProperty(ATTR_STATUS_CODE, As.STATUS_CODE_OK);
-        CwfMessage tResponse = new CwfMessage(tData, pMessage.getHandle());
+        CwfMessageIf tResponse = new CwfMessage(tData, pMessage.getHandle());
         pConnection.getTransportService().addClientMessage(tResponse);
     }
 

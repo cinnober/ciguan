@@ -36,14 +36,19 @@ import com.cinnober.ciguan.datasource.impl.AsXmlRefData;
 import com.cinnober.ciguan.datasource.listtree.AsListTreeNode;
 import com.cinnober.ciguan.datasource.tree.AsTreeNode;
 import com.cinnober.ciguan.impl.As;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * Wrapper class holding menu item definition.
  */
 @SuppressWarnings("deprecation")
+@JsonInclude(Include.NON_NULL)
 public class AsMenuItem extends AsXmlRefData {
 
 	/** The key. */
+	@JsonIgnore
 	public String key;
 
 	/**
@@ -86,6 +91,7 @@ public class AsMenuItem extends AsXmlRefData {
 	 *
 	 * @return true, if is auto submit
 	 */
+	@JsonInclude(Include.NON_DEFAULT)
 	public boolean isAutoSubmit() {
 		Boolean tBool = getValues().getBooleanProperty(ATTR_AUTO_SUBMIT);
 		return tBool != null ? tBool : false;
@@ -115,6 +121,7 @@ public class AsMenuItem extends AsXmlRefData {
 	 * @param pName the name
 	 * @return the parameter
 	 */
+	@JsonIgnore
 	public String getParameter(String pName) {
 		String[] tParameters = (getParameters() != null ? getParameters().split(",") : new String[0]);
 		for (String tParameter : tParameters) {
@@ -131,6 +138,7 @@ public class AsMenuItem extends AsXmlRefData {
 	 *
 	 * @return the view
 	 */
+	@JsonIgnore
 	public AsViewDefinition getView() {
 		String tViewId = getValues().getProperty(ATTR_VIEW);
 		if (tViewId == null) {
@@ -140,6 +148,10 @@ public class AsMenuItem extends AsXmlRefData {
 				getDataSource(com.cinnober.ciguan.datasource.CwfGlobalDataSources.MVC_VIEWDEFS_ALL, null, null);
 		AsViewDefinition tViewDef = (AsViewDefinition) tList.get(tViewId);
 		return tViewDef;
+	}
+	
+	public String getViewId() {
+		return getValues().getProperty(ATTR_VIEW);
 	}
 
 	/**
@@ -163,6 +175,7 @@ public class AsMenuItem extends AsXmlRefData {
 	 * @param pObjects the objects
 	 * @return {@code true}, if is included
 	 */
+	@JsonIgnore
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public boolean isIncluded(AsConnectionIf pConnection, Object... pObjects) {
 		for (Object tObject : pObjects) {
@@ -191,6 +204,7 @@ public class AsMenuItem extends AsXmlRefData {
 	 * @param pConnection the connection
 	 * @return {@code true}, if is access allowed
 	 */
+	@JsonIgnore
 	public boolean isAccessAllowed(AsConnectionIf pConnection) {
 		if (getValues().getObjectList(TAG_MENUITEM).isEmpty()) {
 			AsDataSourceIf<AsXmlRefData> tMenuItems = pConnection.
@@ -208,6 +222,7 @@ public class AsMenuItem extends AsXmlRefData {
 	 * @param pPerspective the perspective
 	 * @return {@code true}, if is for perspective
 	 */
+	@JsonIgnore
 	public boolean isForPerspective(String pPerspective) {
 		String tPerspective = getValues().getProperty(ATTR_PERSPECTIVE);
 		return tPerspective == null || tPerspective.equals(pPerspective);

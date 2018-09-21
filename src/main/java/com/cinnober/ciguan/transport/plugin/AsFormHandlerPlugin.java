@@ -29,6 +29,7 @@ import java.util.Map;
 import com.cinnober.ciguan.AsConnectionIf;
 import com.cinnober.ciguan.AsLoggerIf;
 import com.cinnober.ciguan.CwfDataIf;
+import com.cinnober.ciguan.CwfMessageIf;
 import com.cinnober.ciguan.client.impl.MvcEventEnum;
 import com.cinnober.ciguan.client.impl.MvcModelNames;
 import com.cinnober.ciguan.data.CwfMessage;
@@ -51,7 +52,7 @@ public class AsFormHandlerPlugin extends AsTransportPlugin {
     protected Map<String, AsFormHandlerIf> mFormHandlers = new HashMap<String, AsFormHandlerIf>();
 
     @Override
-    public void onMessage(AsConnectionIf pConnection, CwfMessage pMessage) {
+    public void onMessage(AsConnectionIf pConnection, CwfMessageIf pMessage) {
 
         // Form startup
         if (MvcEventEnum.FormStartEvent.name().equals(pMessage.getName())) {
@@ -91,7 +92,7 @@ public class AsFormHandlerPlugin extends AsTransportPlugin {
      * @param pMessage the message from the client
      * @return the form handler instance, or null if an error occurred
      */
-    protected AsFormHandlerIf ensureFormHandler(CwfMessage pMessage) {
+    protected AsFormHandlerIf ensureFormHandler(CwfMessageIf pMessage) {
 
         AsFormHandlerIf tFormHandler = null;
         try {
@@ -130,7 +131,7 @@ public class AsFormHandlerPlugin extends AsTransportPlugin {
      * @param pConnection the connection
      * @param pMessage the message
      */
-    protected void onFormStart(AsConnectionIf pConnection, CwfMessage pMessage) {
+    protected void onFormStart(AsConnectionIf pConnection, CwfMessageIf pMessage) {
 
         String tFormHandlerClass = pMessage.getData().getProperty(ATTR_FORM_HANDLER);
         String tMvcInstanceId = pMessage.getData().getProperty(ATTR_MVC_INSTANCE_ID);
@@ -173,7 +174,7 @@ public class AsFormHandlerPlugin extends AsTransportPlugin {
      * @param pConnection the connection
      * @param pMessage the message
      */
-    protected void onFormContextLookup(AsConnectionIf pConnection, CwfMessage pMessage) {
+    protected void onFormContextLookup(AsConnectionIf pConnection, CwfMessageIf pMessage) {
 
         String tFormHandlerClass = pMessage.getData().getProperty(ATTR_FORM_HANDLER);
         String tMvcInstanceId = pMessage.getData().getProperty(ATTR_MVC_INSTANCE_ID);
@@ -208,7 +209,7 @@ public class AsFormHandlerPlugin extends AsTransportPlugin {
      * @param pConnection the connection
      * @param pMessage the message
      */
-    protected void onFormSubmit(AsConnectionIf pConnection, CwfMessage pMessage) {
+    protected void onFormSubmit(AsConnectionIf pConnection, CwfMessageIf pMessage) {
         String tMvcInstanceId = pMessage.getData().getProperty(ATTR_MVC_INSTANCE_ID);
         assert tMvcInstanceId != null && !tMvcInstanceId.isEmpty();
         assert mFormHandlers.containsKey(tMvcInstanceId);
@@ -244,7 +245,7 @@ public class AsFormHandlerPlugin extends AsTransportPlugin {
      * @param pConnection the connection
      * @param pMessage the message
      */
-    protected void onFormDestroy(AsConnectionIf pConnection, CwfMessage pMessage) {
+    protected void onFormDestroy(AsConnectionIf pConnection, CwfMessageIf pMessage) {
         String tMvcInstanceId = pMessage.getData().getProperty(ATTR_MVC_INSTANCE_ID);
         assert tMvcInstanceId != null && !tMvcInstanceId.isEmpty();
         assert mFormHandlers.containsKey(tMvcInstanceId);

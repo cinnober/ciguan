@@ -25,6 +25,7 @@ package com.cinnober.ciguan.data;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,10 +35,14 @@ import com.cinnober.ciguan.CwfDataIf;
 import com.cinnober.ciguan.client.impl.MvcDeviceTypeEnum;
 import com.cinnober.ciguan.client.impl.MvcScreenOrientationEnum;
 import com.cinnober.ciguan.datasource.impl.AsMapRefData;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * Class holding data about a perspective.
  */
+@JsonInclude(Include.NON_NULL)
 public class AsPerspectiveData extends AsMapRefData {
 
     /** The id counter. */
@@ -110,7 +115,24 @@ public class AsPerspectiveData extends AsMapRefData {
         }
     }
 
-    /**
+    public SlotModel getSlotModel() {
+    	List<CwfDataIf> slots = getValues().getObjectList(TAG_SLOT);
+    	for (CwfDataIf slot : slots) {
+    		// There can only be one or none...
+    		return new SlotModel(slot);
+    	}
+    	// no slot tag found... assume we have old configuration. 
+    	// Transform!
+        return transform(getValues().getObjectList(TAG_CONTENT));
+    }
+
+    @Deprecated
+    private SlotModel transform(List<CwfDataIf> content) {
+    	// TODO! ...
+		return null;
+	}
+
+	/**
      * Apply slot templates recursively for the given group
      * @param pGroup the perspective group to process
      * @param pSlotTemplates all existing perspective slot templates
@@ -181,6 +203,7 @@ public class AsPerspectiveData extends AsMapRefData {
      *
      * @return the max width
      */
+    @JsonIgnore
     public Integer getMaxWidth() {
         String tValue = getValues().getProperty(ATTR_MAX_WIDTH);
         return tValue != null ? Integer.valueOf(tValue) : null;
@@ -191,6 +214,7 @@ public class AsPerspectiveData extends AsMapRefData {
      *
      * @return the device type
      */
+    @JsonIgnore
     public Set<String> getDeviceType() {
         return mDeviceTypes;
     }
@@ -198,6 +222,7 @@ public class AsPerspectiveData extends AsMapRefData {
     /**
      * @return the supported screen orientations
      */
+    @JsonIgnore
     public Set<String> getScreenOrientation() {
         return mScreenOrientations;
     }
@@ -209,6 +234,40 @@ public class AsPerspectiveData extends AsMapRefData {
      */
     public List<String> getRoles() {
         return mRolesList;
+    }
+
+    
+    @JsonInclude(Include.NON_NULL)
+    public static class SlotModel {
+        public String type;
+        @JsonInclude(Include.NON_DEFAULT)
+        public boolean fixed;
+        public String size;
+        public Set<SlotModel> slotModel;
+        public String[] viewId;
+        
+        public SlotModel(CwfDataIf slot) {
+    		type = slot.getProperty(ATTR_TYPE);
+    		fixed = slot.getBooleanProperty(ATTR_FIXED) != null ? slot.getBooleanProperty(ATTR_FIXED) : false;
+    		size = slot.getProperty(ATTR_SIZE);
+        	List<CwfDataIf> slots = slot.getObjectList(TAG_SLOT);
+        	for (int i = 0; i < slots.size(); i++) {
+        		addSlot(new SlotModel(slots.get(i)));
+        	}
+        	List<CwfDataIf> views = slot.getObjectList(TAG_VIEW);
+        	viewId = views.isEmpty() ? null : new String[views.size()];
+        	for (int i = 0; views != null && i < views.size(); i++) {
+        		viewId[i] = views.get(i).getProperty(ATTR_ID);
+        	}
+		}
+        
+		public void addSlot(SlotModel slot) {
+			if (slotModel == null) {
+				slotModel = new LinkedHashSet<>();
+			}
+			slotModel.add(slot);
+		}
+
     }
 
 }

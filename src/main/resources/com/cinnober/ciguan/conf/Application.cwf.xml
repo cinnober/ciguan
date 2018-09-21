@@ -222,7 +222,7 @@
     <AsDataSources>
         <!--  xml data sources -->
         <AsList id="DATASOURCE_DEF" type="AsDataSourceDef" key="id" text="id"/>
-        <AsList id="PERSPECTIVES_ALL" type="AsPerspectiveData" key="key" text="id" userFilter="AsPerspectiveFilter"/>
+        <AsList id="PERSPECTIVES_ALL" type="AsPerspectiveData" key="id" text="id" userFilter="AsPerspectiveFilter"/>
         <AsList id="METADATA_ALL" type="AsMetaDataData" key="key" text="metadata"/>
         <AsList id="AsMetaObject" type="AsMetaObject" key="name" text="name"/>
         <AsList id="AsMetaField" type="AsMetaField" key="name" text="owner,name"/>

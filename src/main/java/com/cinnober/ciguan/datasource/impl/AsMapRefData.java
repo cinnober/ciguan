@@ -25,6 +25,7 @@ package com.cinnober.ciguan.datasource.impl;
 
 import com.cinnober.ciguan.CwfDataIf;
 import com.cinnober.ciguan.client.MvcModelAttributesIf;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Hand coded implementation of map based values for use in data sources.
@@ -48,6 +49,7 @@ public abstract class AsMapRefData implements MvcModelAttributesIf {
      *
      * @return the values
      */
+    @JsonIgnore
     public CwfDataIf getValues() {
         return mValues;
     }

@@ -38,11 +38,16 @@ import com.cinnober.ciguan.datasource.impl.AsXmlRefData;
 import com.cinnober.ciguan.datasource.tree.AsViewContext;
 import com.cinnober.ciguan.datasource.tree.AsViewField;
 import com.cinnober.ciguan.impl.As;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Wrapper class containg the xml definition of a view.
  */
 @SuppressWarnings("deprecation")
+@JsonInclude(Include.NON_NULL)
 public class AsViewDefinition extends AsXmlRefData {
 
     /** The type. */
@@ -429,6 +434,8 @@ public class AsViewDefinition extends AsXmlRefData {
      *
      * @return the acc service
      */
+    @JsonProperty("auth")
+	@JsonInclude(Include.NON_EMPTY)
     public String getAccService() {
         return getValues().getProperty(ATTR_ACC_SERVICE);
     }
@@ -457,15 +464,15 @@ public class AsViewDefinition extends AsXmlRefData {
      * @return the data source id
      */
     public String getDataSourceId() {
-        if (getType() == MvcViewTypeEnum.chart) {
-            List<CwfDataIf> tList = getValues().getObjectList(TAG_CHART);
-            if (tList.size() > 0) {
-                tList = tList.get(0).getObjectList(TAG_CHART_DATA);
-                if (tList.size() > 0) {
-                    return tList.get(0).getProperty(ATTR_DATASOURCE_ID);
-                }
-            }
-        }
+//        if (getType() == MvcViewTypeEnum.chart) {
+//            List<CwfDataIf> tList = getValues().getObjectList(TAG_CHART);
+//            if (tList.size() > 0) {
+//                tList = tList.get(0).getObjectList(TAG_CHART_DATA);
+//                if (tList.size() > 0) {
+//                    return tList.get(0).getProperty(ATTR_DATASOURCE_ID);
+//                }
+//            }
+//        }
         return getValues().getProperty(ATTR_DATASOURCE_ID);
     }
 
@@ -492,6 +499,7 @@ public class AsViewDefinition extends AsXmlRefData {
      *
      * @return {@code true}, if is dockable
      */
+	@JsonInclude(Include.NON_DEFAULT)
     public boolean isDockable() {
         Boolean tDockable = getValues().getBooleanProperty(ATTR_DOCKABLE);
         return tDockable != null ? tDockable : true;
@@ -502,6 +510,7 @@ public class AsViewDefinition extends AsXmlRefData {
      *
      * @return {@code true}, if is resizable
      */
+	@JsonInclude(Include.NON_DEFAULT)
     public boolean isResizable() {
         Boolean tResizable = getValues().getBooleanProperty(ATTR_RESIZABLE);
         return tResizable != null ? tResizable : true;
@@ -523,6 +532,7 @@ public class AsViewDefinition extends AsXmlRefData {
      * @param <T> the generic type
      * @return the data source
      */
+    @JsonIgnore
     @SuppressWarnings("unchecked")
     public <T> AsListIf<T> getDataSource() {
         if (mType != MvcViewTypeEnum.table) {
@@ -545,6 +555,7 @@ public class AsViewDefinition extends AsXmlRefData {
      *
      * @return the view contexts
      */
+	@JsonInclude(Include.NON_EMPTY)
     public List<AsViewContext> getViewContexts() {
         ArrayList<AsViewContext> tList = new ArrayList<AsViewContext>();
         for (CwfDataIf tField : getValues().getObjectList(TAG_CONTEXT)) {
@@ -558,6 +569,7 @@ public class AsViewDefinition extends AsXmlRefData {
      *
      * @return the fields
      */
+	@JsonInclude(Include.NON_EMPTY)
     public List<AsViewField> getFields() {
         ArrayList<AsViewField> tList = new ArrayList<AsViewField>();
         for (CwfDataIf tDisplay : getValues().getObjectList(TAG_DISPLAY)) {
@@ -580,6 +592,7 @@ public class AsViewDefinition extends AsXmlRefData {
      *
      * @return the menu item
      */
+    @JsonIgnore
     public AsMenuItem getMenuItem() {
         CwfDataIf tMenu = CwfDataFactory.create();
         tMenu.setProperty(ATTR_TAG_NAME, TAG_MENUITEM);
