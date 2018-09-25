@@ -25,10 +25,13 @@ package com.cinnober.ciguan.datasource.tree;
 
 import com.cinnober.ciguan.CwfDataIf;
 import com.cinnober.ciguan.client.MvcModelAttributesIf;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * Wrapper around a context declaration (in a view xml definition).
  */
+@JsonInclude(Include.NON_NULL)
 public class AsViewContext implements MvcModelAttributesIf {
 
     /** The data. */

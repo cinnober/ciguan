@@ -39,6 +39,7 @@ import com.cinnober.ciguan.impl.As;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Wrapper class holding menu item definition.
@@ -159,6 +160,8 @@ public class AsMenuItem extends AsXmlRefData {
 	 *
 	 * @return the acc service
 	 */
+	@JsonProperty("auth")
+	@JsonInclude(Include.NON_EMPTY)
 	public String getAccService() {
 		String tAccService = getValues().getProperty(ATTR_ACC_SERVICE);
 		if (tAccService != null) {
