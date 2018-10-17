@@ -440,6 +440,11 @@ public class AsViewDefinition extends AsXmlRefData {
         return getValues().getProperty(ATTR_ACC_SERVICE);
     }
 
+    @JsonInclude(Include.NON_EMPTY)
+    public String getTitle() {
+    	return getValues().getProperty(ATTR_TITLE);
+    }
+    
     /**
      * Gets the id.
      *
