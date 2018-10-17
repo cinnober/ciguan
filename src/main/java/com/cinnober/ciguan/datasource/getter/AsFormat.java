@@ -169,6 +169,10 @@ public class AsFormat extends AsComponent implements AsFormatIf {
     @Override
     public String format(Object pValue, CwfBusinessTypeIf pBusinessType,
             Locale pLocale) {
+    	if (mFormatters == null || mFormatters.isEmpty()) {
+    		return pValue != null ? String.valueOf(pValue) : EMPTY_STRING;
+    	}
+    	
         if (pBusinessType == CwfBusinessTypes.Date) {
             return formatDate((String) pValue, pLocale);
         }
