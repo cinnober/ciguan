@@ -971,7 +971,7 @@ public class AsDataSourceServiceImpl implements AsDataSourceServiceIf, MvcModelA
      * @return the item class name
      */
     @SuppressWarnings("deprecation")
-	protected String getItemClassName(Object pItem) {
+    protected String getItemClassName(Object pItem) {
         if (pItem instanceof AsTreeNodeFolder) {
             return ((AsTreeNodeFolder) pItem).getItem().getLabel();
         }

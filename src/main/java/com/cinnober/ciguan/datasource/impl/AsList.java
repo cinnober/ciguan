@@ -36,55 +36,55 @@ import com.cinnober.ciguan.datasource.AsSortIf;
  */
 public abstract class AsList<T> extends AsDataSource<T> implements AsListIf<T> {
 
-	/** The mutex. */
-	protected Object mMutex = new Object();
+    /** The mutex. */
+    protected Object mMutex = new Object();
 
-	/** The list meta data. */
-	private AsListMetaDataIf mListMetaData;
+    /** The list meta data. */
+    private AsListMetaDataIf mListMetaData;
 
-	/**
-	 * Instantiates a new as list.
-	 *
-	 * @param pModelId the model id
-	 * @param pSource the source
-	 * @param pFilter the filter
-	 * @param pSort the sort
-	 * @param pClass the class
-	 */
-	public AsList(String pModelId, AsListIf<T> pSource, AsFilterIf<T> pFilter, AsSortIf<T> pSort, Class<T> pClass) {
-		super(pModelId, pSource, pFilter, pSort, pClass);
-		mListMetaData = pSource == null ? null : pSource.getListMetaData();
-	}
+    /**
+     * Instantiates a new as list.
+     *
+     * @param pModelId the model id
+     * @param pSource the source
+     * @param pFilter the filter
+     * @param pSort the sort
+     * @param pClass the class
+     */
+    public AsList(String pModelId, AsListIf<T> pSource, AsFilterIf<T> pFilter, AsSortIf<T> pSort, Class<T> pClass) {
+        super(pModelId, pSource, pFilter, pSort, pClass);
+        mListMetaData = pSource == null ? null : pSource.getListMetaData();
+    }
 
-	@Override
-	public void addListener(AsDataSourceListenerIf<T> pListener) {
-		synchronized (mMutex) {
-			pListener.onDataSourceEvent(AsDataSourceEvent.createSnapshot(this, values()));
-		}
-		super.addListener(pListener);
-	}
+    @Override
+    public void addListener(AsDataSourceListenerIf<T> pListener) {
+        synchronized (mMutex) {
+            pListener.onDataSourceEvent(AsDataSourceEvent.createSnapshot(this, values()));
+        }
+        super.addListener(pListener);
+    }
 
-	@Override
-	public void setListMetaData(AsListMetaDataIf pListMetaData) {
-		mListMetaData = pListMetaData;
-	}
+    @Override
+    public void setListMetaData(AsListMetaDataIf pListMetaData) {
+        mListMetaData = pListMetaData;
+    }
 
-	@Override
-	public AsListMetaDataIf getListMetaData() {
-		return mListMetaData;
-	}
+    @Override
+    public AsListMetaDataIf getListMetaData() {
+        return mListMetaData;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 * Notifies and clears the listeners.
-	 * Updates the management information base.
-	 */
-	@Override
-	public void destroy() {
-		mListeners.notifyListeners(AsDataSourceEvent.createDestroy(this));
-		mListeners.clear();
-		mOwner = null;
-		//		updateMib();
-	}
+    /**
+     * {@inheritDoc}
+     * Notifies and clears the listeners.
+     * Updates the management information base.
+     */
+    @Override
+    public void destroy() {
+        mListeners.notifyListeners(AsDataSourceEvent.createDestroy(this));
+        mListeners.clear();
+        mOwner = null;
+        //        updateMib();
+    }
 
 }

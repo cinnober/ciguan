@@ -30,60 +30,60 @@ package com.cinnober.ciguan.client.util;
  */
 public abstract class StringEscape {
 
-	static String cTest = "#{}[],=\"";
+    static String cTest = "#{}[],=\"";
 
-	/**
-	 * Escapes a subset of the given String matched by any one of the registered regular expressions.
-	 * If the String is null then this method will return null.
-	 * @param pString
-	 * @return the escaped string
-	 */
-	public static String escape(String pString) {
-		if (pString == null || pString.isEmpty()) {
-			return pString;
-		}
-		StringBuilder tBuilder = new StringBuilder();
-		for (int i = 0; i < pString.length(); i++) {
-			char tChar  = pString.charAt(i);
-			if (test(tChar)) {
-				tBuilder.append("#").append(Integer.toString(tChar)).append(";");
-			}
-			else {
-				tBuilder.append(tChar);
-			}
-		}
-		return tBuilder.toString();
-	}
+    /**
+     * Escapes a subset of the given String matched by any one of the registered regular expressions.
+     * If the String is null then this method will return null.
+     * @param pString
+     * @return the escaped string
+     */
+    public static String escape(String pString) {
+        if (pString == null || pString.isEmpty()) {
+            return pString;
+        }
+        StringBuilder tBuilder = new StringBuilder();
+        for (int i = 0; i < pString.length(); i++) {
+            char tChar  = pString.charAt(i);
+            if (test(tChar)) {
+                tBuilder.append("#").append(Integer.toString(tChar)).append(";");
+            }
+            else {
+                tBuilder.append(tChar);
+            }
+        }
+        return tBuilder.toString();
+    }
 
-	private static boolean test(char pC) {
-		return cTest.indexOf(pC) >= 0;
-	}
+    private static boolean test(char pC) {
+        return cTest.indexOf(pC) >= 0;
+    }
 
-	/**
-	 * Unescapes a the given String.
-	 * If the given String is null then this method will return null.
-	 * @param pString
-	 * @return the unescaped string
-	 */
-	public static String unescape(String pString) {
-		if (pString == null || pString.isEmpty()) {
-			return pString;
-		}
-		StringBuilder tBuilder = new StringBuilder();
-		for (int i = 0; i < pString.length(); i++) {
-			char tChar  = pString.charAt(i);
-			if (tChar == '#') {
-				int tPos = pString.indexOf(';', i);
-				int tValue = Integer.parseInt(pString.substring(i + 1, tPos));
-				tBuilder.append((char) tValue);
-				i = tPos;
-			}
-			else {
-				tBuilder.append(tChar);
-			}
-		}
-		return tBuilder.toString();
-	}
+    /**
+     * Unescapes a the given String.
+     * If the given String is null then this method will return null.
+     * @param pString
+     * @return the unescaped string
+     */
+    public static String unescape(String pString) {
+        if (pString == null || pString.isEmpty()) {
+            return pString;
+        }
+        StringBuilder tBuilder = new StringBuilder();
+        for (int i = 0; i < pString.length(); i++) {
+            char tChar  = pString.charAt(i);
+            if (tChar == '#') {
+                int tPos = pString.indexOf(';', i);
+                int tValue = Integer.parseInt(pString.substring(i + 1, tPos));
+                tBuilder.append((char) tValue);
+                i = tPos;
+            }
+            else {
+                tBuilder.append(tChar);
+            }
+        }
+        return tBuilder.toString();
+    }
 
 
 }

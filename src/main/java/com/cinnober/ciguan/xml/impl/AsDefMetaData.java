@@ -44,113 +44,113 @@ import org.w3c.dom.NodeList;
  */
 public class AsDefMetaData extends AsDef {
 
-	/** The m class name. */
-	private String mClassName;
+    /** The m class name. */
+    private String mClassName;
 
-	/** The m server request name. */
-	private String mServerRequestName;
+    /** The m server request name. */
+    private String mServerRequestName;
 
-	/** The m state. */
-	private String mState;
+    /** The m state. */
+    private String mState;
 
-	/** The m attributes. */
-	private Map<String, String> mAttributes = new LinkedHashMap<String, String>();
+    /** The m attributes. */
+    private Map<String, String> mAttributes = new LinkedHashMap<String, String>();
 
-	/**
-	 * Instantiates a new as metadata definition.
-	 *
-	 * @param pNode the node
-	 */
-	public AsDefMetaData(Element pNode) {
-		this(pNode.getAttribute("className"));
-		mServerRequestName = pNode.getAttribute("serverRequestName");
-		mState = pNode.getAttribute("state");
-		if (mServerRequestName.isEmpty()) {
-			mServerRequestName = null;
-		}
-		NodeList tNodes = pNode.getElementsByTagName("Attribute");
-		for (int i = 0; i < tNodes.getLength(); i++) {
-			Element tAttr = (Element) tNodes.item(i);
-			String tAttributeName = tAttr.getAttribute("attributeName");
-			String tBusinessType = tAttr.getAttribute("businessType");
-			mAttributes.put(tAttributeName, tBusinessType);
-		}
-	}
+    /**
+     * Instantiates a new as metadata definition.
+     *
+     * @param pNode the node
+     */
+    public AsDefMetaData(Element pNode) {
+        this(pNode.getAttribute("className"));
+        mServerRequestName = pNode.getAttribute("serverRequestName");
+        mState = pNode.getAttribute("state");
+        if (mServerRequestName.isEmpty()) {
+            mServerRequestName = null;
+        }
+        NodeList tNodes = pNode.getElementsByTagName("Attribute");
+        for (int i = 0; i < tNodes.getLength(); i++) {
+            Element tAttr = (Element) tNodes.item(i);
+            String tAttributeName = tAttr.getAttribute("attributeName");
+            String tBusinessType = tAttr.getAttribute("businessType");
+            mAttributes.put(tAttributeName, tBusinessType);
+        }
+    }
 
-	/**
-	 * Instantiates a new metadata definition.
-	 *
-	 * @param pNode the node
-	 * @param pOldDef the old def
-	 */
-	public AsDefMetaData(Element pNode, AsDefMetaData pOldDef) {
-		this(pNode);
-		if (mServerRequestName == null && pOldDef.getServerRequestName() != null) {
-			mServerRequestName = pOldDef.getServerRequestName();
-		}
-		if (mState.isEmpty() && !pOldDef.getState().isEmpty()) {
-			mState = pOldDef.getState();
-		}
-		for (Map.Entry<String, String> tAttribute : pOldDef.getAttributes().entrySet()) {
-			if (!mAttributes.containsKey(tAttribute.getKey())) {
-				mAttributes.put(tAttribute.getKey(), tAttribute.getValue());
-			}
-		}
-	}
+    /**
+     * Instantiates a new metadata definition.
+     *
+     * @param pNode the node
+     * @param pOldDef the old def
+     */
+    public AsDefMetaData(Element pNode, AsDefMetaData pOldDef) {
+        this(pNode);
+        if (mServerRequestName == null && pOldDef.getServerRequestName() != null) {
+            mServerRequestName = pOldDef.getServerRequestName();
+        }
+        if (mState.isEmpty() && !pOldDef.getState().isEmpty()) {
+            mState = pOldDef.getState();
+        }
+        for (Map.Entry<String, String> tAttribute : pOldDef.getAttributes().entrySet()) {
+            if (!mAttributes.containsKey(tAttribute.getKey())) {
+                mAttributes.put(tAttribute.getKey(), tAttribute.getValue());
+            }
+        }
+    }
 
-	/**
-	 * Instantiates a new metadata definition.
-	 *
-	 * @param pType the type
-	 */
-	public AsDefMetaData(String pType) {
-		mClassName = pType;
-	}
+    /**
+     * Instantiates a new metadata definition.
+     *
+     * @param pType the type
+     */
+    public AsDefMetaData(String pType) {
+        mClassName = pType;
+    }
 
-	/**
-	 * Gets the class name.
-	 *
-	 * @return the class name
-	 */
-	public String getClassName() {
-		return mClassName;
-	}
+    /**
+     * Gets the class name.
+     *
+     * @return the class name
+     */
+    public String getClassName() {
+        return mClassName;
+    }
 
-	/**
-	 * Gets the server request name.
-	 *
-	 * @return the server request name
-	 */
-	public String getServerRequestName() {
-		return mServerRequestName;
-	}
+    /**
+     * Gets the server request name.
+     *
+     * @return the server request name
+     */
+    public String getServerRequestName() {
+        return mServerRequestName;
+    }
 
-	/**
-	 * Gets the state.
-	 *
-	 * @return the state
-	 */
-	public String getState() {
-		return mState;
-	}
+    /**
+     * Gets the state.
+     *
+     * @return the state
+     */
+    public String getState() {
+        return mState;
+    }
 
-	/**
-	 * Gets the attributes.
-	 *
-	 * @return the attributes
-	 */
-	public Map<String, String> getAttributes() {
-		return mAttributes;
-	}
+    /**
+     * Gets the attributes.
+     *
+     * @return the attributes
+     */
+    public Map<String, String> getAttributes() {
+        return mAttributes;
+    }
 
-	/**
-	 * Gets the business type.
-	 *
-	 * @param pField the field
-	 * @return the business type
-	 */
-	public String getBusinessType(String pField) {
-		return mAttributes.get(pField);
-	}
+    /**
+     * Gets the business type.
+     *
+     * @param pField the field
+     * @return the business type
+     */
+    public String getBusinessType(String pField) {
+        return mAttributes.get(pField);
+    }
 
 }

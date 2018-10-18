@@ -116,23 +116,23 @@ public class AsPerspectiveData extends AsMapRefData {
     }
 
     public SlotModel getSlotModel() {
-    	List<CwfDataIf> slots = getValues().getObjectList(TAG_SLOT);
-    	for (CwfDataIf slot : slots) {
-    		// There can only be one or none...
-    		return new SlotModel(slot);
-    	}
-    	// no slot tag found... assume we have old configuration. 
-    	// Transform!
+        List<CwfDataIf> slots = getValues().getObjectList(TAG_SLOT);
+        for (CwfDataIf slot : slots) {
+            // There can only be one or none...
+            return new SlotModel(slot);
+        }
+        // no slot tag found... assume we have old configuration. 
+        // Transform!
         return transform(getValues().getObjectList(TAG_CONTENT));
     }
 
     @Deprecated
     private SlotModel transform(List<CwfDataIf> content) {
-    	// TODO! ...
-		return null;
-	}
+        // TODO! ...
+        return null;
+    }
 
-	/**
+    /**
      * Apply slot templates recursively for the given group
      * @param pGroup the perspective group to process
      * @param pSlotTemplates all existing perspective slot templates
@@ -247,26 +247,26 @@ public class AsPerspectiveData extends AsMapRefData {
         public String[] viewId;
         
         public SlotModel(CwfDataIf slot) {
-    		type = slot.getProperty(ATTR_TYPE);
-    		fixed = slot.getBooleanProperty(ATTR_FIXED) != null ? slot.getBooleanProperty(ATTR_FIXED) : false;
-    		size = slot.getProperty(ATTR_SIZE);
-        	List<CwfDataIf> slots = slot.getObjectList(TAG_SLOT);
-        	for (int i = 0; i < slots.size(); i++) {
-        		addSlot(new SlotModel(slots.get(i)));
-        	}
-        	List<CwfDataIf> views = slot.getObjectList(TAG_VIEW);
-        	viewId = views.isEmpty() ? null : new String[views.size()];
-        	for (int i = 0; views != null && i < views.size(); i++) {
-        		viewId[i] = views.get(i).getProperty(ATTR_ID);
-        	}
-		}
+            type = slot.getProperty(ATTR_TYPE);
+            fixed = slot.getBooleanProperty(ATTR_FIXED) != null ? slot.getBooleanProperty(ATTR_FIXED) : false;
+            size = slot.getProperty(ATTR_SIZE);
+            List<CwfDataIf> slots = slot.getObjectList(TAG_SLOT);
+            for (int i = 0; i < slots.size(); i++) {
+                addSlot(new SlotModel(slots.get(i)));
+            }
+            List<CwfDataIf> views = slot.getObjectList(TAG_VIEW);
+            viewId = views.isEmpty() ? null : new String[views.size()];
+            for (int i = 0; views != null && i < views.size(); i++) {
+                viewId[i] = views.get(i).getProperty(ATTR_ID);
+            }
+        }
         
-		public void addSlot(SlotModel slot) {
-			if (slotModel == null) {
-				slotModel = new LinkedHashSet<>();
-			}
-			slotModel.add(slot);
-		}
+        public void addSlot(SlotModel slot) {
+            if (slotModel == null) {
+                slotModel = new LinkedHashSet<>();
+            }
+            slotModel.add(slot);
+        }
 
     }
 

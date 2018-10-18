@@ -76,7 +76,7 @@ public class AsViewField implements MvcModelAttributesIf {
      *
      * @return the path
      */
-	@JsonInclude(Include.NON_EMPTY)
+    @JsonInclude(Include.NON_EMPTY)
     public String getPath() {
         return mPath;
     }

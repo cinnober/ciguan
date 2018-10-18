@@ -260,7 +260,7 @@ public abstract class AsUtil implements MvcModelAttributesIf {
      * @throws IllegalArgumentException if the input array is empty or contains only null entries
      */
     @SuppressWarnings("deprecation")
-	public static CwfDataIf toArrayContext(AsConnectionIf pConnection, Object pArray) {
+    public static CwfDataIf toArrayContext(AsConnectionIf pConnection, Object pArray) {
         CwfDataIf tArray = CwfDataFactory.create();
         int tLength = Array.getLength(pArray);
         if (tLength > 0) {

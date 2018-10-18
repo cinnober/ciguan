@@ -28,58 +28,58 @@ package com.cinnober.ciguan;
  */
 public interface AsAuthorizationHandlerIf {
 
-	/**
-	 * Check if a user has access to the given service.
-	 *
-	 * @param pUserId The user id.
-	 * @param pServiceRef The service ref.
-	 * @return {@code true}, if successful.
-	 */
-	boolean checkAccess(String pUserId, Object pServiceRef);
+    /**
+     * Check if a user has access to the given service.
+     *
+     * @param pUserId The user id.
+     * @param pServiceRef The service ref.
+     * @return {@code true}, if successful.
+     */
+    boolean checkAccess(String pUserId, Object pServiceRef);
 
-	/**
-	 * Adds access for the specified user to the provided service.
-	 *
-	 * @param pUserId The user id.
-	 * @param pServiceRef The service ref.
-	 */
-	void addAccess(String pUserId, Object pServiceRef);
+    /**
+     * Adds access for the specified user to the provided service.
+     *
+     * @param pUserId The user id.
+     * @param pServiceRef The service ref.
+     */
+    void addAccess(String pUserId, Object pServiceRef);
 
-	/**
-	 * Get the initialized status
-	 * @return true if the authorization handler has been initialized with authorization data, otherwise false
-	 */
-	boolean isInitialized();
+    /**
+     * Get the initialized status
+     * @return true if the authorization handler has been initialized with authorization data, otherwise false
+     */
+    boolean isInitialized();
 
-	/**
-	 * Set the initialization status to true. To be called only from code which populates access data.
-	 */
-	void setInitialized();
+    /**
+     * Set the initialization status to true. To be called only from code which populates access data.
+     */
+    void setInitialized();
 
-	/**
-	 *
-	 * Singleton instance of the authorization handler.
-	 */
-	public static class Singleton {
+    /**
+     *
+     * Singleton instance of the authorization handler.
+     */
+    public static class Singleton {
 
-		static AsAuthorizationHandlerIf cInstance;
+        static AsAuthorizationHandlerIf cInstance;
 
-		/**
-		 * Retrieve the instance.
-		 *
-		 * @return the authorization handler.
-		 */
-		public static AsAuthorizationHandlerIf get() {
-			return cInstance;
-		}
+        /**
+         * Retrieve the instance.
+         *
+         * @return the authorization handler.
+         */
+        public static AsAuthorizationHandlerIf get() {
+            return cInstance;
+        }
 
-		/**
-		 * Creates the instance.
-		 */
-		public static void create() {
-			cInstance = AsBeanFactoryIf.Singleton.get().create(AsAuthorizationHandlerIf.class);
-		}
-	}
+        /**
+         * Creates the instance.
+         */
+        public static void create() {
+            cInstance = AsBeanFactoryIf.Singleton.get().create(AsAuthorizationHandlerIf.class);
+        }
+    }
 
 
 }

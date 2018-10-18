@@ -61,7 +61,7 @@ import java.util.Set;
  * <tt>Collections.synchronizedList</tt> method.  This is best done at creation
  * time, to prevent accidental unsynchronized access to the list:
  * <pre>
- * 	List list = Collections.synchronizedList(new ArrayList(...));
+ *     List list = Collections.synchronizedList(new ArrayList(...));
  * </pre><p>
  *
  * The Iterators returned by this class's <tt>iterator</tt> method are

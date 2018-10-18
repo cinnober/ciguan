@@ -435,14 +435,14 @@ public class AsViewDefinition extends AsXmlRefData {
      * @return the acc service
      */
     @JsonProperty("auth")
-	@JsonInclude(Include.NON_EMPTY)
+    @JsonInclude(Include.NON_EMPTY)
     public String getAccService() {
         return getValues().getProperty(ATTR_ACC_SERVICE);
     }
 
     @JsonInclude(Include.NON_EMPTY)
     public String getTitle() {
-    	return getValues().getProperty(ATTR_TITLE);
+        return getValues().getProperty(ATTR_TITLE);
     }
     
     /**
@@ -504,7 +504,7 @@ public class AsViewDefinition extends AsXmlRefData {
      *
      * @return {@code true}, if is dockable
      */
-	@JsonInclude(Include.NON_DEFAULT)
+    @JsonInclude(Include.NON_DEFAULT)
     public boolean isDockable() {
         Boolean tDockable = getValues().getBooleanProperty(ATTR_DOCKABLE);
         return tDockable != null ? tDockable : true;
@@ -515,7 +515,7 @@ public class AsViewDefinition extends AsXmlRefData {
      *
      * @return {@code true}, if is resizable
      */
-	@JsonInclude(Include.NON_DEFAULT)
+    @JsonInclude(Include.NON_DEFAULT)
     public boolean isResizable() {
         Boolean tResizable = getValues().getBooleanProperty(ATTR_RESIZABLE);
         return tResizable != null ? tResizable : true;
@@ -560,7 +560,7 @@ public class AsViewDefinition extends AsXmlRefData {
      *
      * @return the view contexts
      */
-	@JsonInclude(Include.NON_EMPTY)
+    @JsonInclude(Include.NON_EMPTY)
     public List<AsViewContext> getViewContexts() {
         ArrayList<AsViewContext> tList = new ArrayList<AsViewContext>();
         for (CwfDataIf tField : getValues().getObjectList(TAG_CONTEXT)) {
@@ -574,7 +574,7 @@ public class AsViewDefinition extends AsXmlRefData {
      *
      * @return the fields
      */
-	@JsonInclude(Include.NON_EMPTY)
+    @JsonInclude(Include.NON_EMPTY)
     public List<AsViewField> getFields() {
         ArrayList<AsViewField> tList = new ArrayList<AsViewField>();
         for (CwfDataIf tDisplay : getValues().getObjectList(TAG_DISPLAY)) {

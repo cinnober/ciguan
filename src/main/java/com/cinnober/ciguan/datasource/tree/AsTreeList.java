@@ -106,8 +106,8 @@ public class AsTreeList extends AsEmapiTreeMapList<AsTreeNode> {
      * @param pKey the key
      * @param pNode the node
      */
-	@SuppressWarnings("unlikely-arg-type")
-	public void removeLinkListener(AsListIf pList, String pKey, AsTreeNodeIf pNode) {
+    @SuppressWarnings("unlikely-arg-type")
+    public void removeLinkListener(AsListIf pList, String pKey, AsTreeNodeIf pNode) {
         LinkListener tListener = mLinkListeners.get(pList);
         if (tListener != null) {
             tListener.removeNode(pKey, pNode);
@@ -188,7 +188,7 @@ public class AsTreeList extends AsEmapiTreeMapList<AsTreeNode> {
      *
      * @see LinkEvent
      */
-	private class LinkListener implements AsDataSourceListenerIf {
+    private class LinkListener implements AsDataSourceListenerIf {
 
         /** The list. */
         private final AsListIf mList;
@@ -205,12 +205,12 @@ public class AsTreeList extends AsEmapiTreeMapList<AsTreeNode> {
             mList = pList;
         }
 
-		@Override
+        @Override
         public AsDataSourceIf getDataSource() {
             return mList;
         }
 
-		@Override
+        @Override
         public void onDataSourceEvent(AsDataSourceEventIf pEvent) {
             switch (pEvent.getType()) {
                 case UPDATE:

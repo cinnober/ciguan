@@ -36,91 +36,91 @@ import com.cinnober.ciguan.transport.AsTransportServiceIf;
  */
 public interface AsConnectionIf {
 
-	/**
-	 * Get the model service.
-	 *
-	 * @return the data source service
-	 */
-	AsDataSourceServiceIf getDataSourceService();
+    /**
+     * Get the model service.
+     *
+     * @return the data source service
+     */
+    AsDataSourceServiceIf getDataSourceService();
 
-	/**
-	 * Get the request service.
-	 *
-	 * @return the request service
-	 */
-	AsRequestServiceIf getRequestService();
+    /**
+     * Get the request service.
+     *
+     * @return the request service
+     */
+    AsRequestServiceIf getRequestService();
 
-	/**
-	 * Get the transport service.
-	 *
-	 * @return the transport service
-	 */
-	AsTransportServiceIf getTransportService();
+    /**
+     * Get the transport service.
+     *
+     * @return the transport service
+     */
+    AsTransportServiceIf getTransportService();
 
-	/**
-	 * Set member and user details.
-	 *
-	 * @param pSessionData the new session data
-	 */
-	void setSessionData(AsSessionDataIf pSessionData);
+    /**
+     * Set member and user details.
+     *
+     * @param pSessionData the new session data
+     */
+    void setSessionData(AsSessionDataIf pSessionData);
 
-	/**
-	 * Gets the locale.
-	 *
-	 * @return the locale
-	 */
-	Locale getLocale();
+    /**
+     * Gets the locale.
+     *
+     * @return the locale
+     */
+    Locale getLocale();
 
-	/**
-	 * Change language.
-	 *
-	 * @param pLocale the locale
-	 * @return true if locale changed
-	 */
-	boolean setLocale(String pLocale);
+    /**
+     * Change language.
+     *
+     * @param pLocale the locale
+     * @return true if locale changed
+     */
+    boolean setLocale(String pLocale);
 
-	/**
-	 * Gets the session data.
-	 *
-	 * @return the session data
-	 */
-	AsSessionDataIf getSessionData();
+    /**
+     * Gets the session data.
+     *
+     * @return the session data
+     */
+    AsSessionDataIf getSessionData();
 
-	/**
-	 * Sets the connection data.
-	 *
-	 * @param <T> the generic type
-	 * @param pType the class
-	 * @param pObject the object
-	 */
-	<T> void setConnectionData(Class<T> pType, T pObject);
+    /**
+     * Sets the connection data.
+     *
+     * @param <T> the generic type
+     * @param pType the class
+     * @param pObject the object
+     */
+    <T> void setConnectionData(Class<T> pType, T pObject);
 
-	/**
-	 * Gets the connection data.
-	 *
-	 * @param <T> the type
-	 * @param pType the class
-	 * @return the connection data
-	 */
-	<T> T getConnectionData(Class<T> pType);
+    /**
+     * Gets the connection data.
+     *
+     * @param <T> the type
+     * @param pType the class
+     * @return the connection data
+     */
+    <T> T getConnectionData(Class<T> pType);
 
-	/**
-	 * Gets the session id.
-	 *
-	 * @return the session id
-	 */
-	String getSessionId();
+    /**
+     * Gets the session id.
+     *
+     * @return the session id
+     */
+    String getSessionId();
 
-	/**
-	 * Initializes the connection.
-	 *
-	 * @param pSessionId the session id
-	 */
-	void init(String pSessionId);
+    /**
+     * Initializes the connection.
+     *
+     * @param pSessionId the session id
+     */
+    void init(String pSessionId);
 
-	/**
-	 * Invalidate the connection, called when the HTTP session is invalidated.
-	 */
-	void invalidate();
+    /**
+     * Invalidate the connection, called when the HTTP session is invalidated.
+     */
+    void invalidate();
 
 }
