@@ -115,8 +115,9 @@ public interface AsConnectionIf {
      * Initializes the connection.
      *
      * @param pSessionId the session id
+     * @param pLocale the session locale
      */
-    void init(String pSessionId);
+    void init(String pSessionId, Locale pLocale);
 
     /**
      * Invalidate the connection, called when the HTTP session is invalidated.

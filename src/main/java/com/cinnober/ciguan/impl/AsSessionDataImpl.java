@@ -103,7 +103,7 @@ public class AsSessionDataImpl implements AsSessionDataIf {
 
     @Override
     public Locale getLocale() {
-        return mLocale != null ? mLocale : Locale.getDefault();
+        return mLocale;
     }
 
     @Override

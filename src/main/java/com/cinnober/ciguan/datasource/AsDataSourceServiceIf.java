@@ -30,7 +30,6 @@ import com.cinnober.ciguan.AsConnectionIf;
 import com.cinnober.ciguan.AsHandlerRegistrationIf;
 import com.cinnober.ciguan.AsSessionDataIf;
 import com.cinnober.ciguan.CwfMessageIf;
-import com.cinnober.ciguan.data.CwfMessage;
 
 /**
  * Interface defining services related to data sources.

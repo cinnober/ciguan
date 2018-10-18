@@ -161,29 +161,10 @@ public class AsConnectionImpl implements AsConnectionIf, MvcUserPreferenceAttrib
     }
 
     @Override
-    public void init(String pSessionId) {
-        // set browser locale
+    public void init(String pSessionId, Locale pLocale) {
         mSessionId = pSessionId;
-        //        if (pRequest.getCookies() != null) {
-        //            for (Cookie tCookie : pRequest.getCookies()) {
-        //                if (tCookie.getName().equals("locale")) {
-        //                    setLocale(tCookie.getValue());
-        //                    return;
-        //                }
-        //            }
-        //        }
-        //        if (getSessionData().getLocale() == null) {
-        //            Locale tLocale = pRequest.getLocale();
-        //            if (!setLocale(tLocale.toString())) {
-        //                // if default locale not ok, look for more
-        //                Enumeration<Locale> tLocales = pRequest.getLocales();
-        //                while (tLocales.hasMoreElements()) {
-        //                    if (setLocale(tLocales.nextElement().toString())) {
-        //                        break;
-        //                    }
-        //                }
-        //            }
-        //        }
+        // set browser locale
+        getSessionData().setLocale(pLocale);
     }
 
     @Override

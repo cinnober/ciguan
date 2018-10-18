@@ -26,10 +26,11 @@ package com.cinnober.ciguan.impl;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.transform.TransformerException;
 
@@ -68,11 +69,11 @@ import com.cinnober.ciguan.plugin.AsServicePluginIf;
 public class AsRootImpl extends AsComponent implements AsRootIf, MvcModelAttributesIf {
 
     protected AsDataSourceOwnerIf mGlobalDataSources;
-    protected final Map<String, AsDataSourceOwnerIf> mMemberDataSources = new HashMap<String, AsDataSourceOwnerIf>();
-    protected final Map<String, AsDataSourceOwnerIf> mUserDataSources = new HashMap<String, AsDataSourceOwnerIf>();
+    protected final Map<String, AsDataSourceOwnerIf> mMemberDataSources = new ConcurrentHashMap<String, AsDataSourceOwnerIf>();
+    protected final Map<String, AsDataSourceOwnerIf> mUserDataSources = new ConcurrentHashMap<String, AsDataSourceOwnerIf>();
     protected final AsPreRegisteredGetters mGetters = new AsPreRegisteredGetters();
     protected final List<AsServicePluginIf> mServicePlugins = new ArrayList<AsServicePluginIf>();
-    protected Map<String, AsConnectionIf> mConnectionsMap = new HashMap<String, AsConnectionIf>();
+    protected Map<String, AsConnectionIf> mConnectionsMap = new ConcurrentHashMap<String, AsConnectionIf>();
     protected SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
     @Override
@@ -172,22 +173,19 @@ public class AsRootImpl extends AsComponent implements AsRootIf, MvcModelAttribu
      */
     @Override
     public AsDataSourceOwnerIf getMemberDataSources(String pMemberId) {
-        synchronized (mMemberDataSources) {
-            AsDataSourceOwnerIf tModels = mMemberDataSources.get(pMemberId);
-            if (tModels != null) {
-                return tModels;
-            }
-            tModels = As.getBeanFactory().create(AsMemberDataSources.class, pMemberId);
-            mMemberDataSources.put(pMemberId, tModels);
+    	final String tMemberId = pMemberId != null ? pMemberId : "";
+        AsDataSourceOwnerIf tModels = mMemberDataSources.get(tMemberId);
+        if (tModels != null) {
             return tModels;
         }
+        tModels = As.getBeanFactory().create(AsMemberDataSources.class, tMemberId);
+        mMemberDataSources.put(tMemberId, tModels);
+        return tModels;
     }
 
     @Override
     public AsDataSourceOwnerIf removeMemberDataSources(String pMemberId) {
-        synchronized (mMemberDataSources) {
-            return mMemberDataSources.remove(pMemberId);
-        }
+        return mMemberDataSources.remove(pMemberId);
     }
 
     /**
@@ -196,92 +194,59 @@ public class AsRootImpl extends AsComponent implements AsRootIf, MvcModelAttribu
      */
     @Override
     public AsDataSourceOwnerIf getUserDataSources(String pMemberId, String pUserId) {
-        synchronized (mUserDataSources) {
-            AsDataSourceOwnerIf tModels = mUserDataSources.get(pUserId);
-            if (tModels != null) {
-                return tModels;
-            }
-            tModels = As.getBeanFactory().create(AsUserDataSources.class, pMemberId, pUserId);
-            mUserDataSources.put(pUserId, tModels);
+    	final String tUserId = pUserId != null ? pUserId : "";
+        AsDataSourceOwnerIf tModels = mUserDataSources.get(tUserId);
+        if (tModels != null) {
             return tModels;
         }
+        tModels = As.getBeanFactory().create(AsUserDataSources.class, pMemberId, tUserId);
+        mUserDataSources.put(tUserId, tModels);
+        return tModels;
     }
 
     @Override
     public AsDataSourceOwnerIf removeUserDataSources(String pMemberId, String pUserId) {
-        synchronized (mUserDataSources) {
-            return mUserDataSources.remove(pUserId);
-        }
+        return mUserDataSources.remove(pUserId);
     }
 
     @Override
     public int getAsConnectionCount() {
-        synchronized (mConnectionsMap) {
-            return mConnectionsMap.size();
-        }
+        return mConnectionsMap.size();
     }
 
-    //    @Override
-    //    public AsConnectionIf getAsConnection(HttpServletRequest pRequest) {
-    //        synchronized (mConnectionsMap) {
-    //            String tSessionId = pRequest.getSession().getId();
-    //            AsConnectionIf tConnection = mConnectionsMap.get(tSessionId);
-    //            if (tConnection == null) {
-    //                tConnection = AsBeanFactoryIf.Singleton.get().create(AsConnectionIf.class, tSessionId);
-    //                tConnection.init(tSessionId);
-    //                mConnectionsMap.put(tSessionId, tConnection);
-    //
-    //                // Register a session invalidator if configured
-    //                try {
-    //                    AsConnectionInvalidatorIf tInvalidator =
-    //                            AsBeanFactoryIf.Singleton.get().create(AsConnectionInvalidatorIf.class);
-    //                    pRequest.getSession().setAttribute(AsConnectionInvalidatorIf.class.getSimpleName(), tInvalidator);
-    //                }
-    //                catch (IllegalArgumentException e) {
-    //                    // Bean not configured, ignore
-    //                }
-    //
-    //                AsClientSession tSession = new AsClientSession(tSessionId);
-    //                tSession.browserDetails = pRequest.getHeader("User-Agent");
-    //                As.getBdxHandler().broadcast(tSession);
-    //            }
-    //            return tConnection;
-    //        }
-    //    }
+    @Override
+    public AsConnectionIf createAsConnection(String pSessionId, Locale pLocale) {
+        AsConnectionIf tConnection = mConnectionsMap.get(pSessionId);
+        if (tConnection == null) {
+            tConnection = AsBeanFactoryIf.Singleton.get().create(AsConnectionIf.class, pSessionId);
+            tConnection.init(pSessionId, pLocale);
+            AsClientSession tSession = new AsClientSession(pSessionId);
+            // tSession.browserDetails = pRequest.getHeader("User-Agent");
+            As.getBdxHandler().broadcast(tSession);
+            mConnectionsMap.put(pSessionId, tConnection);
+        }
+
+        // Register a session invalidator if configured
+        try {
+            // AsConnectionInvalidatorIf tInvalidator =
+            //     AsBeanFactoryIf.Singleton.get().create(AsConnectionInvalidatorIf.class);
+            // pRequest.getSession().setAttribute(AsConnectionInvalidatorIf.class.getSimpleName(), tInvalidator);
+        }
+        catch (IllegalArgumentException e) {
+            // Bean not configured, ignore
+        }
+
+        return tConnection;
+    }
 
     @Override
     public AsConnectionIf getAsConnection(String pSessionId) {
-        synchronized (mConnectionsMap) {
-            AsConnectionIf tConnection = mConnectionsMap.get(pSessionId);
-            if (tConnection == null) {
-                tConnection = AsBeanFactoryIf.Singleton.get().create(AsConnectionIf.class, pSessionId);
-                tConnection.init(pSessionId);
-                mConnectionsMap.put(pSessionId, tConnection);
-            }
-
-            // Register a session invalidator if configured
-            try {
-                //                AsConnectionInvalidatorIf tInvalidator =
-                //                        AsBeanFactoryIf.Singleton.get().create(AsConnectionInvalidatorIf.class);
-                //                pRequest.getSession().setAttribute(AsConnectionInvalidatorIf.class.getSimpleName(), tInvalidator);
-            }
-            catch (IllegalArgumentException e) {
-                // Bean not configured, ignore
-            }
-
-            AsClientSession tSession = new AsClientSession(pSessionId);
-            //            tSession.browserDetails = pRequest.getHeader("User-Agent");
-            As.getBdxHandler().broadcast(tSession);
-            return tConnection;
-        }
+    	return mConnectionsMap.get(pSessionId);
     }
-
+    
     @Override
     public void invalidateAsConnection(AsConnectionIf pConnection) {
-        AsConnectionIf tConnection = null;
-        synchronized (mConnectionsMap) {
-            tConnection = mConnectionsMap.remove(pConnection.getSessionId());
-        }
+        AsConnectionIf tConnection = mConnectionsMap.remove(pConnection.getSessionId());
         if (tConnection != null) {
             tConnection.invalidate();
 

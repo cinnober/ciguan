@@ -122,7 +122,6 @@ public class AsMenuItem extends AsXmlRefData {
      * @param pName the name
      * @return the parameter
      */
-    @JsonIgnore
     public String getParameter(String pName) {
         String[] tParameters = (getParameters() != null ? getParameters().split(",") : new String[0]);
         for (String tParameter : tParameters) {
@@ -178,7 +177,6 @@ public class AsMenuItem extends AsXmlRefData {
      * @param pObjects the objects
      * @return {@code true}, if is included
      */
-    @JsonIgnore
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public boolean isIncluded(AsConnectionIf pConnection, Object... pObjects) {
         for (Object tObject : pObjects) {
@@ -207,7 +205,6 @@ public class AsMenuItem extends AsXmlRefData {
      * @param pConnection the connection
      * @return {@code true}, if is access allowed
      */
-    @JsonIgnore
     public boolean isAccessAllowed(AsConnectionIf pConnection) {
         if (getValues().getObjectList(TAG_MENUITEM).isEmpty()) {
             AsDataSourceIf<AsXmlRefData> tMenuItems = pConnection.
@@ -225,7 +222,6 @@ public class AsMenuItem extends AsXmlRefData {
      * @param pPerspective the perspective
      * @return {@code true}, if is for perspective
      */
-    @JsonIgnore
     public boolean isForPerspective(String pPerspective) {
         String tPerspective = getValues().getProperty(ATTR_PERSPECTIVE);
         return tPerspective == null || tPerspective.equals(pPerspective);

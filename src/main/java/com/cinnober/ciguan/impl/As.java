@@ -23,6 +23,8 @@
  */
 package com.cinnober.ciguan.impl;
 
+import java.util.Locale;
+
 import com.cinnober.ciguan.AsAuthorizationHandlerIf;
 import com.cinnober.ciguan.AsBdxHandlerIf;
 import com.cinnober.ciguan.AsBeanFactoryIf;
@@ -125,8 +127,8 @@ public class As {
         }
     }
 
-    public static AsConnectionIf getAsConnection(String pSessionId) {
-        return AsRootIf.Singleton.get().getAsConnection(pSessionId);
+    public static AsConnectionIf createAsConnection(String pSessionId, Locale locale) {
+        return AsRootIf.Singleton.get().createAsConnection(pSessionId, locale);
     }
 
     public static void systemExit(String pString, Throwable pE) {

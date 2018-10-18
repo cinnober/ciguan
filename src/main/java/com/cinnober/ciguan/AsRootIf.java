@@ -23,6 +23,8 @@
  */
 package com.cinnober.ciguan;
 
+import java.util.Locale;
+
 import com.cinnober.ciguan.data.AsClientSession;
 import com.cinnober.ciguan.datasource.AsDataSourceOwnerIf;
 import com.cinnober.ciguan.datasource.AsGetMethodIf;
@@ -168,4 +170,13 @@ public interface AsRootIf {
      */
     AsConnectionIf getAsConnection(String pSessionId);
 
+    /**
+     * Create an AS connection and associate it with the given session ID.
+     *
+     * @param pSessionId the session id
+     * @param locale the session locale
+     * @return the as connection
+     */
+    AsConnectionIf createAsConnection(String pSessionId, Locale locale);
+    
 }
