@@ -71,6 +71,7 @@ public interface MvcModelAttributesIf {
     String ATTR_CONTEXT_OBJECTS = "contextObjects";
     String ATTR_CTRL_KEY_DOWN = "ctrlKeyDown";
     String ATTR_CUSTOM_SLOT_TYPE = "customSlotType";
+    String ATTR_DATA = "data";
     String ATTR_DATA_TYPE = "dataType";
     String ATTR_DATASOURCE_ID = "dataSourceId";
     String ATTR_DATASOURCE_TYPE = "dataSourceType";

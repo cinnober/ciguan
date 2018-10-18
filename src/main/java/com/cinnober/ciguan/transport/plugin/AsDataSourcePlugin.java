@@ -24,8 +24,8 @@
 package com.cinnober.ciguan.transport.plugin;
 
 import com.cinnober.ciguan.AsConnectionIf;
+import com.cinnober.ciguan.CwfMessageIf;
 import com.cinnober.ciguan.client.impl.MvcRequestEnum;
-import com.cinnober.ciguan.data.CwfMessage;
 import com.cinnober.ciguan.datasource.AsDataSourceServiceIf;
 
 /**
@@ -35,7 +35,7 @@ import com.cinnober.ciguan.datasource.AsDataSourceServiceIf;
 public class AsDataSourcePlugin extends AsTransportPlugin {
 
     @Override
-    public void onMessage(AsConnectionIf pConnection, CwfMessage pMessage) {
+    public void onMessage(AsConnectionIf pConnection, CwfMessageIf pMessage) {
         
         try {
             AsDataSourceServiceIf tDataSourceService = pConnection.getDataSourceService();

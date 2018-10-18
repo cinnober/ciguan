@@ -28,7 +28,7 @@ import java.util.Locale;
 import com.cinnober.ciguan.AsConnectionIf;
 import com.cinnober.ciguan.AsSessionDataIf;
 import com.cinnober.ciguan.CwfDataIf;
-import com.cinnober.ciguan.data.CwfMessage;
+import com.cinnober.ciguan.CwfMessageIf;
 
 /**
  * Interface defining request/response related functionality.
@@ -44,7 +44,7 @@ public interface AsRequestServiceIf {
      * @param pMessage the message
      * @return the cwf message
      */
-    CwfMessage send(AsConnectionIf pConnection, CwfMessage pMessage);
+    CwfMessageIf send(AsConnectionIf pConnection, CwfMessageIf pMessage);
 
     /**
      * Send a request and return the response via a callback.
@@ -53,7 +53,7 @@ public interface AsRequestServiceIf {
      * @param pMessage the message
      * @param pCallback the callback to use for passing the response
      */
-    void send(AsConnectionIf pConnection, CwfMessage pMessage, AsResponseCallbackIf<CwfMessage> pCallback);
+    void send(AsConnectionIf pConnection, CwfMessageIf pMessage, AsResponseCallbackIf<CwfMessageIf> pCallback);
     
     /**
      * Send a CWF request that should not have its response sent back to the client.
@@ -62,7 +62,7 @@ public interface AsRequestServiceIf {
      * @param pMessage the message
      * @return the object
      */
-    Object sendLocal(AsConnectionIf pConnection, CwfMessage pMessage);
+    Object sendLocal(AsConnectionIf pConnection, CwfMessageIf pMessage);
     
     /**
      * Send a CWF request that should not have its response sent back to the client.
@@ -71,7 +71,7 @@ public interface AsRequestServiceIf {
      * @param pMessage the message
      * @param pCallback the callback to use for passing the response
      */
-    void sendLocal(AsConnectionIf pConnection, CwfMessage pMessage, AsResponseCallbackIf<Object> pCallback);
+    void sendLocal(AsConnectionIf pConnection, CwfMessageIf pMessage, AsResponseCallbackIf<Object> pCallback);
     
     /**
      * Send a server request that should not have its response sent back to the client.

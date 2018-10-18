@@ -42,7 +42,7 @@ public class AsCwfDataFactoryImpl implements CwfDataFactoryIf {
 
     @Override
     public CwfDataIf create() {
-        return new AsCwfData();
+        return new AsCwfDataJson();
     }
 
 
@@ -55,7 +55,7 @@ public class AsCwfDataFactoryImpl implements CwfDataFactoryIf {
 
     @Override
     public CwfDataIf copy(CwfDataIf pData) {
-        return pData == null ? null : new AsCwfData(pData);
+        return pData == null ? null : new AsCwfDataJson(pData);
     }
 
     /**

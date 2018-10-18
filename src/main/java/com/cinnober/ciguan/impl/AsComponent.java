@@ -37,75 +37,75 @@ import com.cinnober.ciguan.AsInitializationException;
  */
 public abstract class AsComponent implements AsComponentIf {
 
-	private static final List<AsComponent> cAllComponents = new ArrayList<AsComponent>();
+    private static final List<AsComponent> cAllComponents = new ArrayList<AsComponent>();
 
-	protected long mStartTime;
-	protected long mAllStartTime;
-	protected long mSynchExtTime;
+    protected long mStartTime;
+    protected long mAllStartTime;
+    protected long mSynchExtTime;
 
-	public AsComponent() {
-		cAllComponents.add(this);
-	}
+    public AsComponent() {
+        cAllComponents.add(this);
+    }
 
-	public void doStartComponent() throws AsInitializationException {
-		mStartTime = System.currentTimeMillis();
-		startComponent();
-		mStartTime = System.currentTimeMillis() - mStartTime;
-	}
+    public void doStartComponent() throws AsInitializationException {
+        mStartTime = System.currentTimeMillis();
+        startComponent();
+        mStartTime = System.currentTimeMillis() - mStartTime;
+    }
 
-	public final void doAllComponentsStarted() throws AsInitializationException {
-		mAllStartTime = System.currentTimeMillis();
-		allComponentsStarted();
-		mAllStartTime = System.currentTimeMillis() - mAllStartTime;
-	}
+    public final void doAllComponentsStarted() throws AsInitializationException {
+        mAllStartTime = System.currentTimeMillis();
+        allComponentsStarted();
+        mAllStartTime = System.currentTimeMillis() - mAllStartTime;
+    }
 
-	public void doSynchronizeExternalData() {
-		mSynchExtTime = System.currentTimeMillis();
-		synchronizeExternalData();
-		mSynchExtTime = System.currentTimeMillis() - mSynchExtTime;
-		//        As.getBdxHandler().broadcast(new MibAsComponent(this, mStartTime, mAllStartTime, mSynchExtTime));
-	}
+    public void doSynchronizeExternalData() {
+        mSynchExtTime = System.currentTimeMillis();
+        synchronizeExternalData();
+        mSynchExtTime = System.currentTimeMillis() - mSynchExtTime;
+        //        As.getBdxHandler().broadcast(new MibAsComponent(this, mStartTime, mAllStartTime, mSynchExtTime));
+    }
 
-	public void doStopComponent() throws AsInitializationException {
-		stopComponent();
-	}
+    public void doStopComponent() throws AsInitializationException {
+        stopComponent();
+    }
 
-	public final void doAllComponentsStopped() throws AsInitializationException {
-		allComponentsStopped();
-	}
+    public final void doAllComponentsStopped() throws AsInitializationException {
+        allComponentsStopped();
+    }
 
-	public static Collection<AsComponent> getAllComponents() {
-		return cAllComponents;
-	}
+    public static Collection<AsComponent> getAllComponents() {
+        return cAllComponents;
+    }
 
-	@Override
-	public void allComponentsStarted() throws AsInitializationException {
-		// No action by default
-	}
+    @Override
+    public void allComponentsStarted() throws AsInitializationException {
+        // No action by default
+    }
 
-	@Override
-	public void startComponent() throws AsInitializationException {
-		// No action by default
-	}
+    @Override
+    public void startComponent() throws AsInitializationException {
+        // No action by default
+    }
 
-	@Override
-	public void synchronizeExternalData() {
-		// No action by default
-	}
+    @Override
+    public void synchronizeExternalData() {
+        // No action by default
+    }
 
-	@Override
-	public void reloadConfiguration() {
-		// No action by default
-	}
+    @Override
+    public void reloadConfiguration() {
+        // No action by default
+    }
 
-	@Override
-	public void stopComponent() throws AsInitializationException {
-		// No action by default
-	}
+    @Override
+    public void stopComponent() throws AsInitializationException {
+        // No action by default
+    }
 
-	@Override
-	public void allComponentsStopped() throws AsInitializationException {
-		// No action by default
-	}
+    @Override
+    public void allComponentsStopped() throws AsInitializationException {
+        // No action by default
+    }
 
 }

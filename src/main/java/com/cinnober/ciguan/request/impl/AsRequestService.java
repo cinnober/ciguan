@@ -29,6 +29,7 @@ import com.cinnober.ciguan.AsConnectionIf;
 import com.cinnober.ciguan.AsLoggerIf;
 import com.cinnober.ciguan.AsSessionDataIf;
 import com.cinnober.ciguan.CwfDataIf;
+import com.cinnober.ciguan.CwfMessageIf;
 import com.cinnober.ciguan.client.impl.MvcModelNames;
 import com.cinnober.ciguan.data.AsResponse;
 import com.cinnober.ciguan.data.AsStatus;
@@ -56,7 +57,7 @@ public class AsRequestService implements AsRequestServiceIf {
     }
 
     @Override
-    public CwfMessage send(AsConnectionIf pConnection, CwfMessage pMessage) {
+    public CwfMessage send(AsConnectionIf pConnection, CwfMessageIf pMessage) {
         // Send the request and get the TEAI response
         Object tResponse = sendLocal(pConnection, pMessage);
 
@@ -70,7 +71,7 @@ public class AsRequestService implements AsRequestServiceIf {
     }
 
     @Override
-    public Object sendLocal(AsConnectionIf pConnection, CwfMessage pMessage) {
+    public Object sendLocal(AsConnectionIf pConnection, CwfMessageIf pMessage) {
         // Create the request message
         Object tRequest = mTransformer.transform(pConnection, pMessage.getData());
         return sendLocal(pConnection, pMessage.getHandle(), tRequest);
@@ -94,8 +95,8 @@ public class AsRequestService implements AsRequestServiceIf {
     }
 
     @Override
-    public void send(final AsConnectionIf pConnection, final CwfMessage pMessage,
-        final AsResponseCallbackIf<CwfMessage> pCallback) {
+    public void send(final AsConnectionIf pConnection, final CwfMessageIf pMessage,
+        final AsResponseCallbackIf<CwfMessageIf> pCallback) {
         // Send the request and get the TEAI response
         sendLocal(pConnection, pMessage, new AsResponseCallbackIf<Object>() {
             @Override
@@ -112,7 +113,7 @@ public class AsRequestService implements AsRequestServiceIf {
     }
 
     @Override
-    public void sendLocal(AsConnectionIf pConnection, CwfMessage pMessage,
+    public void sendLocal(AsConnectionIf pConnection, CwfMessageIf pMessage,
         final AsResponseCallbackIf<Object> pCallback) {
         // Create the request message
         Object tRequest = mTransformer.transform(pConnection, pMessage.getData());

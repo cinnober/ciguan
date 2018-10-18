@@ -168,16 +168,16 @@
             class="com.cinnober.ciguan.datasource.impl.AsDataSourceExport"
             singleton="false"
             parameters="false"/>
-        <bean
-            interface="com.cinnober.ciguan.rest.AsRestConfigurationIf"
-            class="com.cinnober.ciguan.rest.impl.AsRestConfiguration"
-            singleton="false"
-            parameters="false"/>
-        <bean
-            interface="com.cinnober.ciguan.jmx.AsMetricsMBean"
-            class="com.cinnober.ciguan.jmx.impl.AsMetrics"
-            singleton="false"
-            parameters="false"/>
+<!--         <bean -->
+<!--             interface="com.cinnober.ciguan.rest.AsRestConfigurationIf" -->
+<!--             class="com.cinnober.ciguan.rest.impl.AsRestConfiguration" -->
+<!--             singleton="false" -->
+<!--             parameters="false"/> -->
+<!--         <bean -->
+<!--             interface="com.cinnober.ciguan.jmx.AsMetricsMBean" -->
+<!--             class="com.cinnober.ciguan.jmx.impl.AsMetrics" -->
+<!--             singleton="false" -->
+<!--             parameters="false"/> -->
         <bean
             interface="com.cinnober.ciguan.scheduler.AsSchedulerIf"
             class="com.cinnober.ciguan.scheduler.impl.AsScheduler"
@@ -222,7 +222,7 @@
     <AsDataSources>
         <!--  xml data sources -->
         <AsList id="DATASOURCE_DEF" type="AsDataSourceDef" key="id" text="id"/>
-        <AsList id="PERSPECTIVES_ALL" type="AsPerspectiveData" key="key" text="id" userFilter="AsPerspectiveFilter"/>
+        <AsList id="PERSPECTIVES_ALL" type="AsPerspectiveData" key="id" text="id" userFilter="AsPerspectiveFilter"/>
         <AsList id="METADATA_ALL" type="AsMetaDataData" key="key" text="metadata"/>
         <AsList id="AsMetaObject" type="AsMetaObject" key="name" text="name"/>
         <AsList id="AsMetaField" type="AsMetaField" key="name" text="owner,name"/>

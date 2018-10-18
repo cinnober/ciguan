@@ -24,7 +24,7 @@
 package com.cinnober.ciguan.transport;
 
 import com.cinnober.ciguan.AsConnectionIf;
-import com.cinnober.ciguan.data.CwfMessage;
+import com.cinnober.ciguan.CwfMessageIf;
 import com.cinnober.ciguan.plugin.AsServicePluginIf;
 
 /**
@@ -38,7 +38,7 @@ public interface AsTransportServicePluginIf extends AsServicePluginIf {
      * @param pConnection the connection
      * @param pMessage the message
      */
-    void onMessage(AsConnectionIf pConnection, CwfMessage pMessage);
+    void onMessage(AsConnectionIf pConnection, CwfMessageIf pMessage);
 
     /**
      * Process a plugin reset.

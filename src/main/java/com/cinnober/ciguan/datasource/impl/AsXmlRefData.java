@@ -25,6 +25,7 @@ package com.cinnober.ciguan.datasource.impl;
 
 import com.cinnober.ciguan.CwfDataIf;
 import com.cinnober.ciguan.client.MvcModelAttributesIf;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *  Wrapper containing xml source, simulating a ref data.
@@ -48,11 +49,13 @@ public class AsXmlRefData extends AsMapRefData {
      *
      * @return the tag name
      */
+    @JsonIgnore
     public String getTagName() {
         return getValues().getProperty(MvcModelAttributesIf.ATTR_TAG_NAME);
     }
 
     @Override
+    @JsonIgnore
     public String toString() {
         return getValues().toString();
     }

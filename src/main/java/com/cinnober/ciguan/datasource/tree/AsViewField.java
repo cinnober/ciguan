@@ -25,10 +25,14 @@ package com.cinnober.ciguan.datasource.tree;
 
 import com.cinnober.ciguan.CwfDataIf;
 import com.cinnober.ciguan.client.MvcModelAttributesIf;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * Wrapper around a field definition (in a view).
  */
+@JsonInclude(Include.NON_NULL)
 public class AsViewField implements MvcModelAttributesIf {
 
     /** The path. */
@@ -62,6 +66,7 @@ public class AsViewField implements MvcModelAttributesIf {
      *
      * @return the full name
      */
+    @JsonIgnore
     public String getFullName() {
         return mPath + getName();
     }
@@ -71,6 +76,7 @@ public class AsViewField implements MvcModelAttributesIf {
      *
      * @return the path
      */
+    @JsonInclude(Include.NON_EMPTY)
     public String getPath() {
         return mPath;
     }

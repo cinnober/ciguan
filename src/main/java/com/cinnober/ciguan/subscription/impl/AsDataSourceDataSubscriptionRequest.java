@@ -23,8 +23,8 @@
  */
 package com.cinnober.ciguan.subscription.impl;
 
+import com.cinnober.ciguan.CwfMessageIf;
 import com.cinnober.ciguan.client.MvcModelAttributesIf;
-import com.cinnober.ciguan.data.CwfMessage;
 import com.cinnober.ciguan.subscription.AsDataSourceDataSubscriptionRequestIf;
 
 /**
@@ -33,7 +33,7 @@ import com.cinnober.ciguan.subscription.AsDataSourceDataSubscriptionRequestIf;
 public class AsDataSourceDataSubscriptionRequest extends AsDataSourceListSubscriptionRequest
     implements AsDataSourceDataSubscriptionRequestIf, MvcModelAttributesIf {
 
-    public AsDataSourceDataSubscriptionRequest(CwfMessage pMessage) {
+    public AsDataSourceDataSubscriptionRequest(CwfMessageIf pMessage) {
         super(pMessage);
     }
 

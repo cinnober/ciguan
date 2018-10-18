@@ -25,7 +25,7 @@ package com.cinnober.ciguan.handler;
 
 import com.cinnober.ciguan.AsConnectionIf;
 import com.cinnober.ciguan.CwfDataIf;
-import com.cinnober.ciguan.data.CwfMessage;
+import com.cinnober.ciguan.CwfMessageIf;
 
 /**
  * Interface defining server side support during the MVC form life cycle.
@@ -40,7 +40,7 @@ public interface AsFormHandlerIf {
      * @return an object to be passed back to the view as a context object, or null if
      * no context object should be sent to the view.
      */
-    CwfDataIf onFormStart(AsConnectionIf pConnection, CwfMessage pModel);
+    CwfDataIf onFormStart(AsConnectionIf pConnection, CwfMessageIf pModel);
     
     /**
      * Called upon form context lookup.
@@ -49,7 +49,7 @@ public interface AsFormHandlerIf {
      * @param pModel the model. To find out what to look up, do a <code>getObject(TAG_CONTEXT_LOOKUP)</code>
      * followed by <code>getProperty(ATTR_DATASOURCE_ID)</code> and <code>getProperty(ATTR_KEY)</code>.
      */
-    void onFormContextLookup(AsConnectionIf pConnection, CwfMessage pModel);
+    void onFormContextLookup(AsConnectionIf pConnection, CwfMessageIf pModel);
     
     /**
      * Called just before the form model is submitted to the server.
@@ -57,7 +57,7 @@ public interface AsFormHandlerIf {
      * @param pConnection the connection
      * @param pModel the model
      */
-    void onFormSubmit(AsConnectionIf pConnection, CwfMessage pModel);
+    void onFormSubmit(AsConnectionIf pConnection, CwfMessageIf pModel);
     
     /**
      * Called upon form destruction (close).
@@ -65,7 +65,7 @@ public interface AsFormHandlerIf {
      * @param pConnection the connection
      * @param pModel the model
      */
-    void onFormDestroy(AsConnectionIf pConnection, CwfMessage pModel);
+    void onFormDestroy(AsConnectionIf pConnection, CwfMessageIf pModel);
     
     /**
      * Called when a form handler is discarded, normally immediately after onFormDestroy,

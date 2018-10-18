@@ -171,7 +171,7 @@ public abstract class AsTreeNode<T> implements AsTreeNodeIf<T> {
      * @return the state get method
      */
     @SuppressWarnings("rawtypes")
-	public static AsGetMethod<AsTreeNode> getStateGetMethod() {
+    public static AsGetMethod<AsTreeNode> getStateGetMethod() {
         AsGetMethod<AsTreeNode> tMethod = new AsGetMethod<AsTreeNode>(AsTreeNode.class, "_state") {
             @Override
             public Object getObject(AsTreeNode pItem) {

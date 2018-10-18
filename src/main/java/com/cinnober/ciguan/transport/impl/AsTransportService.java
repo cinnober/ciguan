@@ -29,7 +29,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.cinnober.ciguan.AsConnectionIf;
-import com.cinnober.ciguan.data.CwfMessage;
+import com.cinnober.ciguan.CwfMessageIf;
 import com.cinnober.ciguan.impl.As;
 import com.cinnober.ciguan.transport.AsTransportServiceIf;
 import com.cinnober.ciguan.transport.AsTransportServicePluginIf;
@@ -44,8 +44,7 @@ public class AsTransportService implements AsTransportServiceIf {
         new ArrayList<AsTransportServicePluginIf>();
     
     /** The client messages. */
-    private final List<CwfMessage> mClientMessages =
-        new ArrayList<CwfMessage>();
+    private final List<CwfMessageIf> mClientMessages = new ArrayList<>();
     
     /** The connection. */
     private AsConnectionIf mConnection;
@@ -68,16 +67,16 @@ public class AsTransportService implements AsTransportServiceIf {
     }
 
     @Override
-    public void addClientMessage(CwfMessage pMessage) {
+    public void addClientMessage(CwfMessageIf pMessage) {
         synchronized (mClientMessages) {
             mClientMessages.add(pMessage);
         }
     }
     
     @Override
-    public ArrayList<CwfMessage> getPendingClientMessages() {
+    public ArrayList<CwfMessageIf> getPendingClientMessages() {
         synchronized (mClientMessages) {
-            ArrayList<CwfMessage> tList = new ArrayList<CwfMessage>(mClientMessages);
+            ArrayList<CwfMessageIf> tList = new ArrayList<>(mClientMessages);
             mClientMessages.clear();
             return tList;
         }
@@ -89,8 +88,8 @@ public class AsTransportService implements AsTransportServiceIf {
     }
 
     @Override
-    public void receive(List<CwfMessage> pMessages) {
-        for (CwfMessage tMessage : pMessages) {
+    public void receive(List<CwfMessageIf> pMessages) {
+        for (CwfMessageIf tMessage : pMessages) {
             for (AsTransportServicePluginIf tPlugin : new ArrayList<AsTransportServicePluginIf>(mTransportPlugins)) {
                 if (tPlugin.isEnabled()) {
                     try {

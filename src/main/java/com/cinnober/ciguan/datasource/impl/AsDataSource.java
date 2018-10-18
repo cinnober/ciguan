@@ -44,216 +44,216 @@ import com.cinnober.ciguan.datasource.AsSortIf;
  */
 public abstract class AsDataSource<T> implements AsDataSourceIf<T> {
 
-	/** The last instance id. */
-	private static AtomicLong cLastInstanceId = new AtomicLong();
+    /** The last instance id. */
+    private static AtomicLong cLastInstanceId = new AtomicLong();
 
-	/** The model id. */
-	protected final String mModelId;
+    /** The model id. */
+    protected final String mModelId;
 
-	/** The sort. */
-	protected final AsSortIf<T> mSort;
+    /** The sort. */
+    protected final AsSortIf<T> mSort;
 
-	/** The class. */
-	protected final Class<T> mClass;
+    /** The class. */
+    protected final Class<T> mClass;
 
-	/** The listeners. */
-	protected final AsDataSourceListenerCollection<T> mListeners = new AsDataSourceListenerCollection<T>();
+    /** The listeners. */
+    protected final AsDataSourceListenerCollection<T> mListeners = new AsDataSourceListenerCollection<T>();
 
-	/** The owner. */
-	protected AsDataSourceOwnerIf mOwner;
+    /** The owner. */
+    protected AsDataSourceOwnerIf mOwner;
 
-	/** The filter. */
-	private AsFilterIf<T> mFilter;
+    /** The filter. */
+    private AsFilterIf<T> mFilter;
 
-	/** The source. */
-	private final AsDataSourceIf<T> mSource;
+    /** The source. */
+    private final AsDataSourceIf<T> mSource;
 
-	/** The instance id. */
-	private final long mInstanceId;
+    /** The instance id. */
+    private final long mInstanceId;
 
-	/** The childless timestamp. */
-	private long mChildlessTimestamp = System.currentTimeMillis();
+    /** The childless timestamp. */
+    private long mChildlessTimestamp = System.currentTimeMillis();
 
-	/** The permanent. */
-	private boolean mPermanent;
+    /** The permanent. */
+    private boolean mPermanent;
 
-	/**
-	 * Instantiates a new as data source.
-	 *
-	 * @param pModelId the model id
-	 * @param pSource the source
-	 * @param pFilter the filter
-	 * @param pSort the sort
-	 * @param pClass the class
-	 */
-	public AsDataSource(String pModelId, AsDataSourceIf<T> pSource,
-			AsFilterIf<T> pFilter, AsSortIf<T> pSort, Class<T> pClass) {
-		mModelId = pModelId;
-		mSource = pSource;
-		mFilter = pFilter;
-		mSort = pSort;
-		mClass = pClass;
-		mInstanceId = cLastInstanceId.addAndGet(1);
-	}
+    /**
+     * Instantiates a new as data source.
+     *
+     * @param pModelId the model id
+     * @param pSource the source
+     * @param pFilter the filter
+     * @param pSort the sort
+     * @param pClass the class
+     */
+    public AsDataSource(String pModelId, AsDataSourceIf<T> pSource,
+            AsFilterIf<T> pFilter, AsSortIf<T> pSort, Class<T> pClass) {
+        mModelId = pModelId;
+        mSource = pSource;
+        mFilter = pFilter;
+        mSort = pSort;
+        mClass = pClass;
+        mInstanceId = cLastInstanceId.addAndGet(1);
+    }
 
-	protected long getmInstanceId() {
-		return mInstanceId;
-	}
+    protected long getmInstanceId() {
+        return mInstanceId;
+    }
 
-	/**
-	 * Updates the management information base.
-	 */
-	//	protected void updateMib() {
-	//		MibDataSource tMib = new MibDataSource();
-	//		tMib.key = mInstanceId;
-	//		tMib.dataSourceId = getDataSourceId();
-	//		tMib.listeners = mListeners.size();
-	//		tMib.filter = mFilter != null ? mFilter.toString() : "";
-	//		tMib.sort = mSort != null ? mSort.toString() : "";
-	//		if (mOwner != null) {
-	//			tMib.ownertype = mOwner.getClass().getSimpleName();
-	//			tMib.ownername = mOwner.getName();
-	//		}
-	//		As.getBdxHandler().broadcast(tMib);
-	//	}
+    /**
+     * Updates the management information base.
+     */
+    //    protected void updateMib() {
+    //        MibDataSource tMib = new MibDataSource();
+    //        tMib.key = mInstanceId;
+    //        tMib.dataSourceId = getDataSourceId();
+    //        tMib.listeners = mListeners.size();
+    //        tMib.filter = mFilter != null ? mFilter.toString() : "";
+    //        tMib.sort = mSort != null ? mSort.toString() : "";
+    //        if (mOwner != null) {
+    //            tMib.ownertype = mOwner.getClass().getSimpleName();
+    //            tMib.ownername = mOwner.getName();
+    //        }
+    //        As.getBdxHandler().broadcast(tMib);
+    //    }
 
-	@Override
-	public String getDataSourceId() {
-		return mModelId;
-	}
+    @Override
+    public String getDataSourceId() {
+        return mModelId;
+    }
 
-	@Override
-	public AsDataSourceOwnerIf getOwner() {
-		return mOwner;
-	}
+    @Override
+    public AsDataSourceOwnerIf getOwner() {
+        return mOwner;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * Updates the management information base.
-	 * @see AsDataSource#updateMib()
-	 */
-	@Override
-	public void setOwner(AsDataSourceOwnerIf pOwner) {
-		// Only allow owner to be set once
-		if (mOwner == null) {
-			mOwner = pOwner;
-			//			updateMib();
-		}
-	}
+    /**
+     * {@inheritDoc}
+     *
+     * Updates the management information base.
+     * @see AsDataSource#updateMib()
+     */
+    @Override
+    public void setOwner(AsDataSourceOwnerIf pOwner) {
+        // Only allow owner to be set once
+        if (mOwner == null) {
+            mOwner = pOwner;
+            //            updateMib();
+        }
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * Updates the management information base.
-	 * @see AsDataSource#updateMib()
-	 */
-	@Override
-	public void addListener(AsDataSourceListenerIf<T> pListener) {
-		synchronized (mListeners) {
-			mListeners.add(pListener);
-			mChildlessTimestamp = 0;
-		}
-		//		updateMib();
-	}
+    /**
+     * {@inheritDoc}
+     *
+     * Updates the management information base.
+     * @see AsDataSource#updateMib()
+     */
+    @Override
+    public void addListener(AsDataSourceListenerIf<T> pListener) {
+        synchronized (mListeners) {
+            mListeners.add(pListener);
+            mChildlessTimestamp = 0;
+        }
+        //        updateMib();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * Updates the management information base.
-	 * @see AsDataSource#updateMib()
-	 */
-	@Override
-	public void removeListener(AsDataSourceListenerIf<T> pListener) {
-		synchronized (mListeners) {
-			mListeners.remove(pListener);
-			if (mListeners.isEmpty()) {
-				mChildlessTimestamp = System.currentTimeMillis();
-			}
-		}
-		//		updateMib();
-	}
+    /**
+     * {@inheritDoc}
+     *
+     * Updates the management information base.
+     * @see AsDataSource#updateMib()
+     */
+    @Override
+    public void removeListener(AsDataSourceListenerIf<T> pListener) {
+        synchronized (mListeners) {
+            mListeners.remove(pListener);
+            if (mListeners.isEmpty()) {
+                mChildlessTimestamp = System.currentTimeMillis();
+            }
+        }
+        //        updateMib();
+    }
 
-	@Override
-	public boolean hasListeners() {
-		return mListeners.size() > 0;
-	}
+    @Override
+    public boolean hasListeners() {
+        return mListeners.size() > 0;
+    }
 
-	@Override
-	public long getChildlessTime() {
-		return mChildlessTimestamp == 0 ? 0 : System.currentTimeMillis() - mChildlessTimestamp;
-	}
+    @Override
+    public long getChildlessTime() {
+        return mChildlessTimestamp == 0 ? 0 : System.currentTimeMillis() - mChildlessTimestamp;
+    }
 
-	/**
-	 * Notify listeners.
-	 *
-	 * @param pEvent the event
-	 */
-	protected void notifyListeners(AsDataSourceEventIf<T> pEvent) {
-		synchronized (mListeners) {
-			mListeners.notifyListeners(pEvent);
-		}
-	}
+    /**
+     * Notify listeners.
+     *
+     * @param pEvent the event
+     */
+    protected void notifyListeners(AsDataSourceEventIf<T> pEvent) {
+        synchronized (mListeners) {
+            mListeners.notifyListeners(pEvent);
+        }
+    }
 
-	@Override
-	public AsDataSourceIf<T> getSource() {
-		return mSource;
-	}
+    @Override
+    public AsDataSourceIf<T> getSource() {
+        return mSource;
+    }
 
-	@Override
-	public AsFilterIf<T> getFilter() {
-		return mFilter;
-	}
+    @Override
+    public AsFilterIf<T> getFilter() {
+        return mFilter;
+    }
 
-	@Override
-	public AsSortIf<T> getSort() {
-		return mSort;
-	}
+    @Override
+    public AsSortIf<T> getSort() {
+        return mSort;
+    }
 
-	/**
-	 * Sets the base filter.
-	 *
-	 * @param pFilter the new base filter
-	 */
-	public void setBaseFilter(AsFilterIf<T> pFilter) {
-		if (mFilter != null) {
-			throw new IllegalStateException("Filter already defined");
-		}
-		mFilter = pFilter;
-	}
+    /**
+     * Sets the base filter.
+     *
+     * @param pFilter the new base filter
+     */
+    public void setBaseFilter(AsFilterIf<T> pFilter) {
+        if (mFilter != null) {
+            throw new IllegalStateException("Filter already defined");
+        }
+        mFilter = pFilter;
+    }
 
-	/**
-	 * Checks if the datasource includes the specified item.
-	 *
-	 * @param pItem the item
-	 * @return true, if successful
-	 */
-	public boolean include(T pItem) {
-		return mFilter == null || mFilter.include(pItem);
-	}
+    /**
+     * Checks if the datasource includes the specified item.
+     *
+     * @param pItem the item
+     * @return true, if successful
+     */
+    public boolean include(T pItem) {
+        return mFilter == null || mFilter.include(pItem);
+    }
 
-	@Override
-	public Class<T> getItemClass() {
-		return mClass;
-	}
+    @Override
+    public Class<T> getItemClass() {
+        return mClass;
+    }
 
-	/**
-	 * Gets the number of listeners.
-	 *
-	 * @return the number of listeners
-	 */
-	public int getNumberOfListeners() {
-		return mListeners.size();
-	}
+    /**
+     * Gets the number of listeners.
+     *
+     * @return the number of listeners
+     */
+    public int getNumberOfListeners() {
+        return mListeners.size();
+    }
 
-	@Override
-	public void setPermanent() {
-		mPermanent = true;
-	}
+    @Override
+    public void setPermanent() {
+        mPermanent = true;
+    }
 
-	@Override
-	public boolean isPermanent() {
-		return mPermanent;
-	}
+    @Override
+    public boolean isPermanent() {
+        return mPermanent;
+    }
 
 }

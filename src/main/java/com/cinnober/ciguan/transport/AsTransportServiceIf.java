@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cinnober.ciguan.AsConnectionIf;
-import com.cinnober.ciguan.data.CwfMessage;
+import com.cinnober.ciguan.CwfMessageIf;
 
 /**
  * Interface defining the application server transport service layer.
@@ -46,7 +46,7 @@ public interface AsTransportServiceIf {
      *
      * @param pMessages a list of messages (requests)
      */
-    void receive(List<CwfMessage> pMessages);
+    void receive(List<CwfMessageIf> pMessages);
 
     /**
      * Transport service reset, called when the underlying session is invalidated.
@@ -59,14 +59,14 @@ public interface AsTransportServiceIf {
      *
      * @return the pending client messages
      */
-    ArrayList<CwfMessage> getPendingClientMessages();
+    ArrayList<CwfMessageIf> getPendingClientMessages();
 
     /**
      * Add a client message.
      *
      * @param pMessage the message
      */
-    void addClientMessage(CwfMessage pMessage);
+    void addClientMessage(CwfMessageIf pMessage);
     
     /**
      * Add a transport plugin to the service.

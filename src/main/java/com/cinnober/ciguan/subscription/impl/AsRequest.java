@@ -25,16 +25,16 @@ package com.cinnober.ciguan.subscription.impl;
 
 import com.cinnober.ciguan.AsRequestIf;
 import com.cinnober.ciguan.CwfDataIf;
-import com.cinnober.ciguan.data.CwfMessage;
+import com.cinnober.ciguan.CwfMessageIf;
 
 /**
  * Base class for application server requests
  */
 public abstract class AsRequest implements AsRequestIf {
 
-    private final CwfMessage mMessage;
+    private final CwfMessageIf mMessage;
 
-    public AsRequest(CwfMessage pMessage) {
+    public AsRequest(CwfMessageIf pMessage) {
         mMessage = pMessage;
     }
 

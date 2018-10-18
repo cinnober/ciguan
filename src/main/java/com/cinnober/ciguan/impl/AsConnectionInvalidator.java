@@ -35,11 +35,11 @@ import com.cinnober.ciguan.AsRootIf;
  */
 public class AsConnectionInvalidator implements AsConnectionInvalidatorIf /*, HttpSessionBindingListener*/ {
 
-	public void valueUnbound(String pSessionId) {
-		AsConnectionIf tConnection = AsRootIf.Singleton.get().getAsConnection(pSessionId);
-		if (tConnection != null) {
-			AsRootIf.Singleton.get().invalidateAsConnection(tConnection);
-		}
-	}
+    public void valueUnbound(String pSessionId) {
+        AsConnectionIf tConnection = AsRootIf.Singleton.get().getAsConnection(pSessionId);
+        if (tConnection != null) {
+            AsRootIf.Singleton.get().invalidateAsConnection(tConnection);
+        }
+    }
 
 }

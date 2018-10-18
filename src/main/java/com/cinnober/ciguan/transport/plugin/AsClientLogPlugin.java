@@ -29,6 +29,7 @@ import java.util.Date;
 import com.cinnober.ciguan.AsConnectionIf;
 import com.cinnober.ciguan.AsRootIf;
 import com.cinnober.ciguan.CwfDataIf;
+import com.cinnober.ciguan.CwfMessageIf;
 import com.cinnober.ciguan.client.impl.MvcEventEnum;
 import com.cinnober.ciguan.client.impl.MvcModelNames;
 import com.cinnober.ciguan.data.AsClientLogEntry;
@@ -47,7 +48,7 @@ public class AsClientLogPlugin extends AsTransportPlugin {
     protected SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
     @Override
-    public void onMessage(AsConnectionIf pConnection, CwfMessage pMessage) {
+    public void onMessage(AsConnectionIf pConnection, CwfMessageIf pMessage) {
 
         // Client logging
         if (MvcModelNames.LogEntry.name().equals(pMessage.getName())) {

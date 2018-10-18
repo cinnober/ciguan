@@ -46,7 +46,7 @@ public class AsTreeNodeFolder extends AsTreeNode<AsTreeFolder> {
     private final String mLabel;
 
     /** The listener. */
-	private AsTreeNodeSource mListener;
+    private AsTreeNodeSource mListener;
 
     /** The filter. */
     private String mFilter;
@@ -78,7 +78,7 @@ public class AsTreeNodeFolder extends AsTreeNode<AsTreeFolder> {
      * @return the string
      */
     @SuppressWarnings("resource")
-	private static String format(int pIndex) {
+    private static String format(int pIndex) {
         StringBuilder tBuilder = new StringBuilder();
         Formatter tFormatter = new Formatter(tBuilder);
         tFormatter.format(FORMAT, pIndex);
@@ -90,7 +90,7 @@ public class AsTreeNodeFolder extends AsTreeNode<AsTreeFolder> {
         return mLabel + " (" + mList.size() + ")";
     }
 
-	@Override
+    @Override
     protected void collapseNode() {
 
         if (mListener == null) {

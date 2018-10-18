@@ -29,7 +29,7 @@ import java.util.Locale;
 import com.cinnober.ciguan.AsConnectionIf;
 import com.cinnober.ciguan.AsHandlerRegistrationIf;
 import com.cinnober.ciguan.AsSessionDataIf;
-import com.cinnober.ciguan.data.CwfMessage;
+import com.cinnober.ciguan.CwfMessageIf;
 
 /**
  * Interface defining services related to data sources.
@@ -43,7 +43,7 @@ public interface AsDataSourceServiceIf {
      *
      * @return the list
      */
-    List<CwfMessage> dequeuePendingDataSourceEvents();
+    List<CwfMessageIf> dequeuePendingDataSourceEvents();
     
     /**
      * Reset all data source subscriptions.
@@ -69,7 +69,7 @@ public interface AsDataSourceServiceIf {
      *
      * @param pEvent the event
      */
-    void addPendingDataSourceEvent(CwfMessage pEvent);
+    void addPendingDataSourceEvent(CwfMessageIf pEvent);
     
     /**
      * Add a contained client data source event to the queue.
@@ -111,7 +111,7 @@ public interface AsDataSourceServiceIf {
      * @param pConnection the connection
      * @param pRequest the request
      */
-    void request(AsConnectionIf pConnection, CwfMessage pRequest);
+    void request(AsConnectionIf pConnection, CwfMessageIf pRequest);
 
     /**
      * Get menu items.
@@ -120,7 +120,7 @@ public interface AsDataSourceServiceIf {
      * @param pMessage the message
      * @return the menu
      */ 
-    void getMenu(AsConnectionIf pConnection, CwfMessage pMessage);
+    void getMenu(AsConnectionIf pConnection, CwfMessageIf pMessage);
 
     /**
      * Get handler registration for subscription handle.

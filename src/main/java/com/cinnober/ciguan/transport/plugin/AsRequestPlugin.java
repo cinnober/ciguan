@@ -25,6 +25,7 @@ import com.cinnober.ciguan.AsConnectionIf;
 import com.cinnober.ciguan.AsLoggerIf;
 import com.cinnober.ciguan.AsSessionDataIf;
 import com.cinnober.ciguan.CwfDataIf;
+import com.cinnober.ciguan.CwfMessageIf;
 import com.cinnober.ciguan.client.impl.MvcEventEnum;
 import com.cinnober.ciguan.client.impl.MvcModelNames;
 import com.cinnober.ciguan.data.AsClientSession;
@@ -41,7 +42,7 @@ import com.cinnober.ciguan.request.AsRequestServiceIf;
 public class AsRequestPlugin extends AsTransportPlugin {
 
     @Override
-    public void onMessage(AsConnectionIf pConnection, CwfMessage pMessage) {
+    public void onMessage(AsConnectionIf pConnection, CwfMessageIf pMessage) {
 
         if (pMessage.getName().equals(MvcModelNames.ServerRequest.name())) {
             // Check the request token validity
@@ -52,7 +53,7 @@ public class AsRequestPlugin extends AsTransportPlugin {
 
                 // This is a request to the back-end, call the request service
                 AsRequestServiceIf tService = pConnection.getRequestService();
-                CwfMessage tResponse = tService.send(pConnection, pMessage);
+                CwfMessageIf tResponse = tService.send(pConnection, pMessage);
                 if (tResponse != null) {
                     pConnection.getTransportService().addClientMessage(tResponse);
 
@@ -77,7 +78,7 @@ public class AsRequestPlugin extends AsTransportPlugin {
      * @param pMessage the client message foir which the check failed
      * @return a formatted log entry string
      */
-    protected String formatTokenMismatchLog(AsConnectionIf pConnection, CwfMessage pMessage) {
+    protected String formatTokenMismatchLog(AsConnectionIf pConnection, CwfMessageIf pMessage) {
         StringBuilder tLog = new StringBuilder();
         tLog.append("Client request token does not match the session, possible CSRF attack.\n\n");
 
@@ -103,15 +104,15 @@ public class AsRequestPlugin extends AsTransportPlugin {
         return tLog.toString();
     }
 
-    protected void preProcessRequest(AsConnectionIf pConnection, CwfMessage pMessage) {
+    protected void preProcessRequest(AsConnectionIf pConnection, CwfMessageIf pMessage) {
         // No action, override when needed
     }
 
-    protected void postProcessRequest(AsConnectionIf pConnection, CwfMessage pMessage, CwfMessage pResponse) {
+    protected void postProcessRequest(AsConnectionIf pConnection, CwfMessageIf pMessage, CwfMessageIf pResponse) {
         // No action, override when needed
     }
 
-    protected boolean checkRequestToken(AsConnectionIf pConnection, CwfMessage pMessage) {
+    protected boolean checkRequestToken(AsConnectionIf pConnection, CwfMessageIf pMessage) {
         String tToken = pConnection.getSessionData().getRequestToken();
         if (tToken == null || !tToken.equals(pMessage.getData().getProperty(ATTR_REQUEST_TOKEN))) {
             // Possible security breach, log and invalidate the session

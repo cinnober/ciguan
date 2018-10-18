@@ -25,6 +25,7 @@ package com.cinnober.ciguan.handler.impl;
 
 import com.cinnober.ciguan.AsConnectionIf;
 import com.cinnober.ciguan.CwfDataIf;
+import com.cinnober.ciguan.CwfMessageIf;
 import com.cinnober.ciguan.client.MvcModelAttributesIf;
 import com.cinnober.ciguan.client.impl.MvcEventEnum;
 import com.cinnober.ciguan.data.CwfMessage;
@@ -47,7 +48,7 @@ public abstract class AsFormHandler implements AsFormHandlerIf, MvcModelAttribut
      * Default form start-up action, override if needed
      */
     @Override
-    public CwfDataIf onFormStart(AsConnectionIf pConnection, CwfMessage pModel) {
+    public CwfDataIf onFormStart(AsConnectionIf pConnection, CwfMessageIf pModel) {
         // No action by default
         return null;
     }
@@ -56,7 +57,7 @@ public abstract class AsFormHandler implements AsFormHandlerIf, MvcModelAttribut
      * Default form context lookup action, override if needed
      */
     @Override
-    public void onFormContextLookup(AsConnectionIf pConnection, CwfMessage pModel) {
+    public void onFormContextLookup(AsConnectionIf pConnection, CwfMessageIf pModel) {
         // No action by default
     }
 
@@ -64,7 +65,7 @@ public abstract class AsFormHandler implements AsFormHandlerIf, MvcModelAttribut
      * Default form submit action, override if needed
      */
     @Override
-    public void onFormSubmit(AsConnectionIf pConnection, CwfMessage pModel) {
+    public void onFormSubmit(AsConnectionIf pConnection, CwfMessageIf pModel) {
         // No action by default
     }
 
@@ -72,7 +73,7 @@ public abstract class AsFormHandler implements AsFormHandlerIf, MvcModelAttribut
      * Default form destruction action, override if needed
      */
     @Override
-    public void onFormDestroy(AsConnectionIf pConnection, CwfMessage pModel) {
+    public void onFormDestroy(AsConnectionIf pConnection, CwfMessageIf pModel) {
         // No action by default
     }
 

@@ -25,6 +25,7 @@ package com.cinnober.ciguan.transport.plugin;
 
 import com.cinnober.ciguan.AsConnectionIf;
 import com.cinnober.ciguan.CwfDataIf;
+import com.cinnober.ciguan.CwfMessageIf;
 import com.cinnober.ciguan.client.impl.MvcModelNames;
 import com.cinnober.ciguan.data.CwfDataFactory;
 import com.cinnober.ciguan.data.CwfMessage;
@@ -59,7 +60,7 @@ public class AsFileUploadPlugin extends AsTransportPlugin {
     }
 
     @Override
-    public void onMessage(AsConnectionIf pConnection, CwfMessage pMessage) {
+    public void onMessage(AsConnectionIf pConnection, CwfMessageIf pMessage) {
         if (pMessage.getName().equals(MvcModelNames.FileUploadResult.name())) {
 
             String tModelName = pMessage.getData().getProperty(ATTR_OBJECT_NAME);
@@ -104,7 +105,7 @@ public class AsFileUploadPlugin extends AsTransportPlugin {
      *
      * @param pMessage the new default return status
      */
-    protected void setDefaultReturnStatus(CwfMessage pMessage) {
+    protected void setDefaultReturnStatus(CwfMessageIf pMessage) {
         if (pMessage.getData().getObjectList(ATTR_HANDLER_RESULT).size() == 1) {
             CwfDataIf tHandlerResult = pMessage.getData().getObjectList(ATTR_HANDLER_RESULT).get(0);
             setStatusCode(tHandlerResult.getIntProperty(ATTR_STATUS_CODE));

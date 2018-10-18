@@ -39,6 +39,7 @@ import com.cinnober.ciguan.AsHandlerRegistrationIf;
 import com.cinnober.ciguan.AsMetaDataHandlerIf;
 import com.cinnober.ciguan.AsSessionDataIf;
 import com.cinnober.ciguan.CwfDataIf;
+import com.cinnober.ciguan.CwfMessageIf;
 import com.cinnober.ciguan.CwfRequestNameIf;
 import com.cinnober.ciguan.client.MvcModelAttributesIf;
 import com.cinnober.ciguan.client.impl.MvcEventEnum;
@@ -98,8 +99,8 @@ public class AsDataSourceServiceImpl implements AsDataSourceServiceIf, MvcModelA
     protected final AsSessionDataSourcesIf mSessionDataSources;
 
     /** The Pending data source events. */
-    protected final List<CwfMessage> mPendingDataSourceEvents =
-        Collections.synchronizedList(new ArrayList<CwfMessage>());
+    protected final List<CwfMessageIf> mPendingDataSourceEvents =
+        Collections.synchronizedList(new ArrayList<>());
 
     /** The Pending has data source events. */
     protected final Map<String, RpcHasDataSourceEventIf> mPendingHasDataSourceEvents =
@@ -432,9 +433,9 @@ public class AsDataSourceServiceImpl implements AsDataSourceServiceIf, MvcModelA
      * @return the list
      */
     @Override
-    public List<CwfMessage> dequeuePendingDataSourceEvents() {
+    public List<CwfMessageIf> dequeuePendingDataSourceEvents() {
 
-        List<CwfMessage> tEvents = new ArrayList<CwfMessage>();
+        List<CwfMessageIf> tEvents = new ArrayList<>();
         List<RpcHasDataSourceEventIf> tHasEvents = new ArrayList<RpcHasDataSourceEventIf>();
 
         if (mPendingDataSourceEvents.size() > 0) {
@@ -479,7 +480,7 @@ public class AsDataSourceServiceImpl implements AsDataSourceServiceIf, MvcModelA
      * {@inheritDoc}
      */
     @Override
-    public void addPendingDataSourceEvent(CwfMessage pEvent) {
+    public void addPendingDataSourceEvent(CwfMessageIf pEvent) {
         mPendingDataSourceEvents.add(pEvent);
     }
 
@@ -503,7 +504,7 @@ public class AsDataSourceServiceImpl implements AsDataSourceServiceIf, MvcModelA
      * {@inheritDoc}
      */
     @Override
-    public void request(AsConnectionIf pConnection, CwfMessage pRequest) {
+    public void request(AsConnectionIf pConnection, CwfMessageIf pRequest) {
 
         CwfRequestNameIf tRequestName = MvcRequestEnum.get(pRequest.getName());
         if (tRequestName instanceof MvcRequestEnum) {
@@ -516,7 +517,7 @@ public class AsDataSourceServiceImpl implements AsDataSourceServiceIf, MvcModelA
      */
     @SuppressWarnings({ "unchecked", "deprecation" })
     @Override
-    public void getMenu(AsConnectionIf pConnection, CwfMessage pRequest) {
+    public void getMenu(AsConnectionIf pConnection, CwfMessageIf pRequest) {
 
         // create context object from context
         CwfDataIf tContext = CwfDataFactory.create();
@@ -544,7 +545,7 @@ public class AsDataSourceServiceImpl implements AsDataSourceServiceIf, MvcModelA
         AsContextMenu tItem = ((AsListIf<AsContextMenu>) tDataSource).get("Session");
         CwfDataIf tData = tItem.getMenu(pConnection, tSession);
 
-        CwfMessage tMessage = new CwfMessage(MvcEventEnum.ContextMenuResponse, tData, pRequest.getHandle());
+        CwfMessageIf tMessage = new CwfMessage(MvcEventEnum.ContextMenuResponse, tData, pRequest.getHandle());
         addPendingDataSourceEvent(tMessage);
     }
 
@@ -555,7 +556,7 @@ public class AsDataSourceServiceImpl implements AsDataSourceServiceIf, MvcModelA
      * @param pRequestName the request name
      * @param pRequest the request
      */
-    protected void handleRequest(AsConnectionIf pConnection, MvcRequestEnum pRequestName, CwfMessage pRequest) {
+    protected void handleRequest(AsConnectionIf pConnection, MvcRequestEnum pRequestName, CwfMessageIf pRequest) {
         AsDataSourceViewportListenerIf<Object> tListener = getTableDataSourceSubscription(pRequest.getHandle());
         if (tListener != null) {
             handleViewportRequest(pConnection, pRequestName, pRequest, tListener);
@@ -600,7 +601,7 @@ public class AsDataSourceServiceImpl implements AsDataSourceServiceIf, MvcModelA
     @SuppressWarnings({ "unchecked", "rawtypes" })
     protected void handleViewportRequest(
         AsConnectionIf pConnection,
-        MvcRequestEnum pRequestName, CwfMessage pRequest,
+        MvcRequestEnum pRequestName, CwfMessageIf pRequest,
         AsDataSourceViewportListenerIf<Object> pListener) {
 
         CwfDataIf tData = pRequest.getData();
@@ -713,7 +714,7 @@ public class AsDataSourceServiceImpl implements AsDataSourceServiceIf, MvcModelA
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private void getObject(AsConnectionIf pConnection, AsDataSourceViewportListenerIf<?> pListener,
-            CwfMessage pRequest) {
+            CwfMessageIf pRequest) {
 
         String tKey = pRequest.getData().getProperty(ATTR_KEY);
         AsListIf tList = (AsListIf) pListener.getDataSource();
@@ -740,7 +741,7 @@ public class AsDataSourceServiceImpl implements AsDataSourceServiceIf, MvcModelA
      * @param pRequest the request
      */
     protected void createContextMenu(
-        AsConnectionIf pConnection, AsDataSourceViewportListenerIf<?> pListener, CwfMessage pRequest) {
+        AsConnectionIf pConnection, AsDataSourceViewportListenerIf<?> pListener, CwfMessageIf pRequest) {
 
         String tPerspective = pRequest.getData().getProperty(ATTR_PERSPECTIVE);
         String tView = pRequest.getData().getProperty(ATTR_VIEW);
@@ -970,7 +971,7 @@ public class AsDataSourceServiceImpl implements AsDataSourceServiceIf, MvcModelA
      * @return the item class name
      */
     @SuppressWarnings("deprecation")
-	protected String getItemClassName(Object pItem) {
+    protected String getItemClassName(Object pItem) {
         if (pItem instanceof AsTreeNodeFolder) {
             return ((AsTreeNodeFolder) pItem).getItem().getLabel();
         }
