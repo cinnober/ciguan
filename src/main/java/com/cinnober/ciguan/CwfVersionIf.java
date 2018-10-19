@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Cinnober Financial Technology AB (cinnober.com)
+ * Copyright (c) 2018 Cinnober Financial Technology AB (cinnober.com)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,19 +27,19 @@ package com.cinnober.ciguan;
 
 /**
  *
- * Interface defining the iGUAN version
+ * Interface defining the CIGUAN version
  * 
  */
 public interface CwfVersionIf {
     
     /**
-     * The current version number in "Dewey Decimal" notation.
+     * The current version number using "Semantic Versioning" notation.
      */
     String NAME = "CIGUAN";
-    String VERSION = "0.1.0";
+    String VERSION = "0.2.0";
     String CODENAME = "Greenleaf";
     String COPYRIGHT = "Copyright (c) 2018 Cinnober Financial Technology AB (cinnober.com). ";
-    String LICENCE = "The MIT License (MIT)";
+    String LICENSE = "The MIT License (MIT)";
     
     /**
      * @return the major version
@@ -52,9 +52,9 @@ public interface CwfVersionIf {
     int getMinorVersion();
     
     /**
-     * @return the micro version
+     * @return the patch version
      */
-    int getMicroVersion();
+    int getPatchVersion();
 
     /**
      *
@@ -67,13 +67,13 @@ public interface CwfVersionIf {
 
         int mMajorVersion;
         int mMinorVersion;
-        int mMicroVersion;
+        int mPatchVersion;
         
         private Singleton() {
             String[] tTokens = VERSION.split("\\.");
             mMajorVersion = Integer.parseInt(tTokens[0]);
             mMinorVersion = Integer.parseInt(tTokens[1]);
-            mMicroVersion = Integer.parseInt(tTokens[2]);
+            mPatchVersion = Integer.parseInt(tTokens[2]);
         }
         
         public static CwfVersionIf get() {
@@ -94,8 +94,8 @@ public interface CwfVersionIf {
         }
         
         @Override
-        public int getMicroVersion() {
-            return mMicroVersion;
+        public int getPatchVersion() {
+            return mPatchVersion;
         }
         
         @Override
@@ -103,7 +103,7 @@ public interface CwfVersionIf {
             return NAME + System.lineSeparator() 
                  + VERSION + " (" + CODENAME + ")" + System.lineSeparator() 
                  + COPYRIGHT + System.lineSeparator() 
-                 + LICENCE;
+                 + LICENSE;
         }
     }
     
