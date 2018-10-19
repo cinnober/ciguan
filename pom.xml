@@ -3,7 +3,7 @@
   <groupId>com.cinnober.ciguan</groupId>
   <artifactId>ciguan</artifactId>
   <packaging>jar</packaging>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
   <name>ciguan</name>
   <url>http://github.com/cinnober/ciguan</url>
 
@@ -16,7 +16,7 @@
     <license>
       <name>MIT License</name>
       <url>https://github.com/cinnober/ciguan/license.txt</url>
-      <distribution>repo</distribution>
+      <distribution>manual</distribution>
           <!--
               repo - may be downloaded from the Maven repository
               manual - user must manually download and install the dependency.
@@ -83,7 +83,6 @@
       <version>1.3.3</version>
     </dependency>
 
-	<!-- https://mvnrepository.com/artifact/org.json/json -->
 	<dependency>
 	    <groupId>org.json</groupId>
 	    <artifactId>json</artifactId>
@@ -96,12 +95,6 @@
 	  	<version>2.9.6</version>
 	</dependency>
   
-<!--     <dependency> -->
-<!--       <groupId>javax.servlet</groupId> -->
-<!--       <artifactId>javax.servlet-api</artifactId> -->
-<!--       <version>4.0.0</version> -->
-<!--       <scope>provided</scope> -->
-<!--     </dependency> -->
   </dependencies>
 
   <build>
