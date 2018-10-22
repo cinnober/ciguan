@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Cinnober Financial Technology AB (cinnober.com)
+ * Copyright (c) 2018 Cinnober Financial Technology AB (cinnober.com)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,8 +36,8 @@ import com.cinnober.ciguan.client.MvcModelAttributesIf;
  * Implementation of a message transferred across the wire
  */
 @SuppressWarnings("serial")
-public class CwfMessage extends JSONObject 
-	implements CwfMessageIf, Serializable, MvcModelAttributesIf {
+public class CwfMessage extends JSONObject
+    implements CwfMessageIf, Serializable, MvcModelAttributesIf {
 
     protected CwfMessage() {
     }
