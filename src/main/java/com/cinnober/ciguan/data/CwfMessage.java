@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017 Cinnober Financial Technology AB (cinnober.com)
+ * Copyright (c) 2018 Cinnober Financial Technology AB (cinnober.com)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,8 @@ package com.cinnober.ciguan.data;
 
 import java.io.Serializable;
 
+import org.json.JSONObject;
+
 import com.cinnober.ciguan.CwfDataIf;
 import com.cinnober.ciguan.CwfMessageIf;
 import com.cinnober.ciguan.CwfModelNameIf;
@@ -34,10 +36,8 @@ import com.cinnober.ciguan.client.MvcModelAttributesIf;
  * Implementation of a message transferred across the wire
  */
 @SuppressWarnings("serial")
-public class CwfMessage implements CwfMessageIf, Serializable, MvcModelAttributesIf {
-
-    private CwfDataIf mData;
-    private int mHandle;
+public class CwfMessage extends JSONObject
+    implements CwfMessageIf, Serializable, MvcModelAttributesIf {
 
     protected CwfMessage() {
     }
@@ -49,23 +49,28 @@ public class CwfMessage implements CwfMessageIf, Serializable, MvcModelAttribute
         this(pData.getProperty(ATTR_MODEL_NAME), pData, pHandle);
     }
     private CwfMessage(String pMessageName, CwfDataIf pData, int pHandle) {
-        mData = pData == null ? CwfDataFactory.create() : pData;
-        mHandle = pHandle;
-        if (pMessageName != null) {
-            mData.setProperty(ATTR_MODEL_NAME, pMessageName);
-        }
+    	CwfDataIf tData = pData == null ? CwfDataFactory.create() : pData;
+    	if (pMessageName != null) {
+    		tData.setProperty(ATTR_MODEL_NAME, pMessageName);
+    	}
+        put(ATTR_DATA, tData);
+        put(ATTR_HANDLE, pHandle);
     }
 
     public CwfDataIf getData() {
-        return mData;
+        return (CwfDataIf) get(ATTR_DATA);
     }
 
     public int getHandle() {
-        return mHandle;
+        return getInt(ATTR_HANDLE);
     }
 
     public String getName() {
-        return mData.getProperty(ATTR_MODEL_NAME);
+        return getData().getProperty(ATTR_MODEL_NAME);
+    }
+    
+    public JSONObject getJson() {
+        return this;
     }
 
 }
